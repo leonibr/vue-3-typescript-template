@@ -4,7 +4,7 @@ import { RouterView } from 'vue-router'
 
 <template>
   <div id="app">
-    <RouterView />
+    <router-view />
     <!-- <service-worker-update-popup /> -->
   </div>
 </template>
