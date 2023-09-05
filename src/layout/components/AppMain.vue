@@ -1,34 +1,30 @@
 <template>
   <section class="app-main">
     <transition name="fade-transform" mode="out-in">
-      <router-view />
+      <keep-alive :include="cachedViews">
+        <router-view :key="key" />
+      </keep-alive>
     </transition>
-    <!--
-    <keep-alive :include="cachedViews">
-      <router-view :key="key" />
-    </keep-alive>
-    -->
   </section>
 </template>
 
 <script lang="ts">
-export default {
-  cachedViews() {
-    return [0, 1, 2] //TagsViewModule.cachedViews
+import { ref, defineComponent } from 'vue'
+import { useTagsView } from '@/stores/tags-view-store'
+import { useRoute } from 'vue-router'
+
+export default defineComponent({
+  data() {
+    const tagStore = useTagsView()
+    const route = useRoute()
+    const key = ref(route.path)
+    const cachedViews = ref(tagStore.cachedViews as unknown as (string | RegExp)[])
+    return {
+      cachedViews,
+      key
+    }
   }
-}
-// import { Component, Vue } from 'vue-property-decorator'
-// // import { TagsViewModule } from '@/store/modules/tags-view'
-
-// @Component({
-//   name: 'AppMain'
-// })
-// export default class extends Vue {
-
-//   get key() {
-//     return this.$route.path
-//   }
-// }
+})
 </script>
 
 <style lang="scss" scoped>

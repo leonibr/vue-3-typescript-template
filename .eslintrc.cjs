@@ -16,6 +16,7 @@ module.exports = {
     quotes: ['error', 'single'],
     '@typescript-eslint/ban-types': 'error',
     '@typescript-eslint/no-var-requires': 'off',
+    'vue/object-curly-spacing': 'off',
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'space-before-function-paren': ['error', 'never'],
@@ -28,7 +29,6 @@ module.exports = {
     'vue/component-name-in-template-casing': ['error', 'kebab-case'],
     'vue/eqeqeq': 'error',
     'vue/key-spacing': 'error',
-    'vue/match-component-file-name': 'error',
-    'vue/object-curly-spacing': 'error'
+    'vue/match-component-file-name': 'error'
   }
 }
