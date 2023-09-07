@@ -32,6 +32,7 @@ declare module 'vue' {
     IconHamburger: typeof import('./src/components/icons/IconHamburger.vue')['default']
     IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
+    RightPanel: typeof import('./src/components/RightPanel/index.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ScreenFull: typeof import('./src/components/ScreenFull/index.vue')['default']
