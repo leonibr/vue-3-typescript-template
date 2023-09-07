@@ -67,7 +67,7 @@ export const useUserStore = defineStore('UserStore', {
       this.SET_TOKEN(data.accessToken)
     },
 
-    ResetToken() {
+    resetToken() {
       removeToken()
       this.SET_TOKEN('')
       this.SET_ROLES([])

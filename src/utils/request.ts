@@ -1,9 +1,9 @@
 import axios from 'axios'
-import { Message, MessageBox } from 'element-ui'
-import { UserModule } from '@/store/modules/user'
+import { ElMessage, ElMessageBox } from 'element-plus'
+import { useUserStore } from '@/stores/user-store'
 
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: import.meta.env.VUE_APP_BASE_API, // url = base url + request url
   timeout: 5000
   // withCredentials: true // send cookies when cross-domain requests
 })
@@ -11,9 +11,10 @@ const service = axios.create({
 // Request interceptors
 service.interceptors.request.use(
   (config) => {
+    const userStore = useUserStore()
     // Add X-Access-Token header to every request, you can add other custom headers here
-    if (UserModule.token) {
-      config.headers['X-Access-Token'] = UserModule.token
+    if (userStore.token) {
+      config.headers['X-Access-Token'] = userStore.token
     }
     return config
   },
@@ -35,22 +36,19 @@ service.interceptors.response.use(
     // You can change this part for your own usage.
     const res = response.data
     if (res.code !== 20000) {
-      Message({
+      ElMessage({
         message: res.message || 'Error',
         type: 'error',
         duration: 5 * 1000
       })
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        MessageBox.confirm(
-          '你已被登出，可以取消继续留在该页面，或者重新登录',
-          '确定登出',
-          {
-            confirmButtonText: '重新登录',
-            cancelButtonText: '取消',
-            type: 'warning'
-          }
-        ).then(() => {
-          UserModule.ResetToken()
+        ElMessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
+          confirmButtonText: '重新登录',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          const userStore = useUserStore()
+          userStore.resetToken()
           location.reload() // To prevent bugs from vue-router
         })
       }
@@ -60,7 +58,7 @@ service.interceptors.response.use(
     }
   },
   (error) => {
-    Message({
+    ElMessage({
       message: error.message,
       type: 'error',
       duration: 5 * 1000

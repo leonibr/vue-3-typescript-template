@@ -5,39 +5,32 @@
 </template>
 
 <script lang="ts">
-//   import { Component, Vue } from 'vue-property-decorator'
-//   import { UserModule } from '@/store/modules/user'
 //   import AdminDashboard from './admin/index.vue'
 //   import EditorDashboard from './editor/index.vue'
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue'
+import { useUserStore } from '@/stores/user-store'
 
-//   @Component({
-//     name: 'Dashboard',
-//     components: {
-//       AdminDashboard,
-//       EditorDashboard
-//     }
-//   })
+type CurrentRole = 'admin-dashboard' | 'editor-dashboard'
 
-    export default defineComponent({
-        name: 'DashBoard',
-        computed: {
-            roles() {
-                this.
-            }
-        }
-    })
-  class Old {
-    private currentRole = 'admin-dashboard'
-
-    get roles() {
-      return UserModule.roles
+export default defineComponent({
+  name: 'DashBoard',
+  setup() {
+    const currentRole = ref<CurrentRole>('admin-dashboard')
+    const userStore = useUserStore()
+    return {
+      userStore,
+      currentRole
     }
-
-    created() {
-      if (!this.roles.includes('admin')) {
-        this.currentRole = 'editor-dashboard'
-      }
+  },
+  created() {
+    if (!this.roles.includes('admin')) {
+      this.currentRole = 'editor-dashboard'
+    }
+  },
+  computed: {
+    roles() {
+      return this.userStore.roles
     }
   }
+})
 </script>

@@ -38,7 +38,7 @@ export const constantRoutes: RouteRecordRaw[] = [
     children: [
       {
         path: 'dashboard',
-        component: () => import('@/views/HomeView.vue'),
+        component: () => import('@/views/dashboard/index.vue'),
         name: 'Dashboard',
         meta: {
           title: 'dashboard',
