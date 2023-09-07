@@ -131,7 +131,8 @@
 import { useSettingsStore } from '@/stores/settings-store'
 import AppMain from './components/AppMain.vue'
 import NavBar from './components/NavBar.vue'
-import SideBar from '@/layout/components/SideBar/index.vue'
+import SideBar from '@/layout/components/side-bar/index.vue'
+import TagsView from '@/layout/components/tags-view/index.vue'
 import { DeviceType, useAppStore } from '@/stores/app-store'
 import { defineComponent } from 'vue'
 import ResizeMixin from '@/layout/mixins/resize-mixin'
@@ -143,7 +144,8 @@ export default defineComponent({
     AppMain,
     NavBar,
     SideBar,
-    RightPanel
+    RightPanel,
+    TagsView
   },
   mixins: [ResizeMixin],
   setup() {

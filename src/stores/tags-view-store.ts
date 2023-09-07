@@ -2,6 +2,8 @@ import type { _RouteRecordBase } from 'vue-router'
 import { defineStore } from 'pinia'
 
 export interface ITagView extends Partial<_RouteRecordBase> {
+  query?: string
+  fullPath?: string
   title?: string
 }
 
