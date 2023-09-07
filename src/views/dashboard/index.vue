@@ -1,5 +1,8 @@
 <template>
   <div class="dashboard-container">
+    <router-link to="/about">
+      <el-button type="primary"> About </el-button>
+    </router-link>
     <component :is="currentRole" />
   </div>
 </template>

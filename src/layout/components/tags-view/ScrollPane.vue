@@ -12,7 +12,6 @@
 <script lang="ts">
 import type { ElScrollbar } from 'element-plus'
 import { onMounted, defineComponent, ref, getCurrentInstance } from 'vue'
-import { onBeforeUnmount } from 'vue'
 
 const tagSpacing = 4
 
@@ -21,25 +20,19 @@ export default defineComponent({
   emits: ['scroll'],
   setup() {
     const scrollContainer = ref<InstanceType<typeof ElScrollbar> | null>(null)
-
     return {
       scrollContainer
     }
   },
-
-  created() {},
   mounted() {
-    onMounted(() => {
-      this.scrollWrapper.addEventListener('scroll', this.emitScroll, true)
-    })
-
-    onBeforeUnmount(() => {
-      this.scrollWrapper.removeEventListener('scroll', this.emitScroll)
-    })
+    onMounted(() => this.scrollWrapper.addEventListener('scroll', this.emitScroll, true))
+  },
+  beforeUnmount() {
+    this.scrollWrapper.removeEventListener('scroll', this.emitScroll)
   },
   computed: {
     scrollWrapper() {
-      return (this.$refs.scrollContainer as typeof ElScrollbar).$refs.wrap as HTMLElement
+      return (this.$refs.scrollContainer as typeof ElScrollbar).$refs.wrapRef as HTMLElement
     }
   },
   methods: {

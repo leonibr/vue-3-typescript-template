@@ -1,6 +1,9 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+    <router-link to="/dashboard">
+      <el-button type="secondary"> Dashboard </el-button>
+    </router-link>
   </div>
 </template>
 

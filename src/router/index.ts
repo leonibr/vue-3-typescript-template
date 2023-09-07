@@ -32,6 +32,37 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 */
 export const constantRoutes: RouteRecordRaw[] = [
   {
+    path: '/redirect',
+    component: LayOut,
+    meta: { hidden: true },
+    children: [
+      {
+        path: '/redirect/:path(.*)',
+        component: () => import('@/views/redirect/index.vue')
+      }
+    ]
+  },
+  {
+    path: '/login',
+    component: () => import('@/views/login/index.vue'),
+    meta: { hidden: true }
+  },
+  {
+    path: '/auth-redirect',
+    component: () => import('@/views/login/auth-redirect.vue'),
+    meta: { hidden: true }
+  },
+  {
+    path: '/404',
+    component: () => import('@/views/error-page/404.vue'),
+    meta: { hidden: true }
+  },
+  {
+    path: '/401',
+    component: () => import('@/views/error-page/401.vue'),
+    meta: { hidden: true }
+  },
+  {
     path: '/',
     component: LayOut,
     redirect: '/dashboard',
@@ -54,7 +85,7 @@ export const constantRoutes: RouteRecordRaw[] = [
     // route level code-splitting
     // this generates a separate chunk (About.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
-    component: () => import('../views/AboutView.vue')
+    component: () => import('@/views/AboutView.vue')
   }
 ]
 
