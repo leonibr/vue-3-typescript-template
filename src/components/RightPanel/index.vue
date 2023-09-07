@@ -18,64 +18,77 @@
 
 <script lang="ts">
 import { addClass, removeClass } from '@/utils'
-import { defineComponent } from 'vue'
+import { defineComponent, ref, watch, onMounted, onBeforeUnmount } from 'vue'
+import { useSettingsStore } from '@/stores/settings-store'
 
 //   @Component({
 //     name: 'RightPanel'
 //   })
-export default defineComponent({})
-
-class OldClass {
-  @Prop({ default: false }) private clickNotClose!: boolean
-  @Prop({ default: 250 }) private buttonTop!: number
-
-  private show = false
-
-  get theme() {
-    return SettingsModule.theme
-  }
-
-  @Watch('show')
-  private onShowChange(value: boolean) {
-    if (value && !this.clickNotClose) {
-      this.addEventClick()
+export default defineComponent({
+  name: 'RightPanel',
+  props: {
+    clickNotClose: {
+      type: Boolean,
+      default: false
+    },
+    buttonTop: {
+      type: Number,
+      default: 250
     }
-    if (value) {
-      addClass(document.body, 'showRightPanel')
-    } else {
-      removeClass(document.body, 'showRightPanel')
+  },
+  setup() {
+    const settingsStore = useSettingsStore()
+    const show = ref(false)
+
+    return {
+      settingsStore,
+      show
+    }
+  },
+  created() {
+    watch(ref(this.show), this.onShowChange)
+    onMounted(this.insertToBody)
+    onBeforeUnmount(this.beforeDestroy)
+  },
+  computed: {
+    theme() {
+      return this.settingsStore.theme
+    }
+  },
+  methods: {
+    onShowChange(value: boolean) {
+      if (value && !this.clickNotClose) {
+        this.addEventClick()
+      }
+      if (value) {
+        addClass(document.body, 'showRightPanel')
+      } else {
+        removeClass(document.body, 'showRightPanel')
+      }
+    },
+    addEventClick() {
+      window.addEventListener('click', this.closeSidebar)
+    },
+    closeSidebar(ev: MouseEvent) {
+      const parent = (ev.target as HTMLElement).closest('.rightPanel')
+      if (!parent) {
+        this.show = false
+        window.removeEventListener('click', this.closeSidebar)
+      }
+    },
+    insertToBody() {
+      const elx = this.$refs.rightPanel as Element
+      const body = document.querySelector('body')
+      if (body) {
+        body.insertBefore(elx, body.firstChild)
+      }
+    },
+    beforeDestroy() {
+      const elx = this.$refs.rightPanel as Element
+      elx.remove()
     }
   }
-
-  mounted() {
-    this.insertToBody()
-  }
-
-  beforeDestroy() {
-    const elx = this.$refs.rightPanel as Element
-    elx.remove()
-  }
-
-  private addEventClick() {
-    window.addEventListener('click', this.closeSidebar)
-  }
-
-  private closeSidebar(ev: MouseEvent) {
-    const parent = (ev.target as HTMLElement).closest('.rightPanel')
-    if (!parent) {
-      this.show = false
-      window.removeEventListener('click', this.closeSidebar)
-    }
-  }
-
-  private insertToBody() {
-    const elx = this.$refs.rightPanel as Element
-    const body = document.querySelector('body')
-    if (body) {
-      body.insertBefore(elx, body.firstChild)
-    }
-  }
-}
+})
 </script>
 
 <style lang="scss">

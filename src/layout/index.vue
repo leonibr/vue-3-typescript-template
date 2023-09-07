@@ -135,13 +135,15 @@ import SideBar from '@/layout/components/SideBar/index.vue'
 import { DeviceType, useAppStore } from '@/stores/app-store'
 import { defineComponent } from 'vue'
 import ResizeMixin from '@/layout/mixins/resize-mixin'
+import RightPanel from '@/components/RightPanel/index.vue'
 
 export default defineComponent({
   name: 'LayOut',
   components: {
     AppMain,
     NavBar,
-    SideBar
+    SideBar,
+    RightPanel
   },
   mixins: [ResizeMixin],
   setup() {

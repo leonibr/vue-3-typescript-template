@@ -1,6 +1,6 @@
 <template>
-  <div :class="{ 'has-logo': showLogo() }">
-    <sidebar-logo v-if="showLogo()" :collapse="isCollapse()" />
+  <div :class="{ 'has-logo': showLogo }">
+    <sidebar-logo v-if="showLogo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
       <el-menu
         :default-active="activeMenu"
@@ -13,11 +13,11 @@
         mode="vertical"
       >
         <sidebar-item
-          v-for="route in routes()"
+          v-for="route in routes"
           :key="route.path"
           :item="route"
           :base-path="route.path"
-          :is-collapse="isCollapse()"
+          :is-collapse="isCollapse"
         />
       </el-menu>
     </el-scrollbar>
@@ -49,7 +49,7 @@ export default defineComponent({
       permissionStore
     }
   },
-  methods: {
+  computed: {
     sidebar() {
       return this.appStore.sidebar
     },
@@ -61,7 +61,11 @@ export default defineComponent({
     showLogo() {
       return this.settingsStore.showSidebarLogo
     },
-
+    isCollapse() {
+      return !this.sidebar.opened
+    }
+  },
+  methods: {
     menuActiveTextColor() {
       if (this.settingsStore.sidebarTextTheme) {
         return this.settingsStore.theme
@@ -80,10 +84,6 @@ export default defineComponent({
         return meta.activeMenu
       }
       return path
-    },
-
-    isCollapse() {
-      return !this.sidebar().opened
     }
   }
 })
