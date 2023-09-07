@@ -28,7 +28,7 @@ export const useAppStore = defineStore('appStore', {
       opened: getSidebarStatus() !== 'closed',
       withoutAnimation: false
     },
-    size: (getSize() || 'medium') as SizeType,
+    size: (getSize() || 'default') as SizeType,
     language: 'en'
   }),
   getters: {

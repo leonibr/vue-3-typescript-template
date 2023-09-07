@@ -61,7 +61,7 @@ import { useAppStore } from '@/stores/app-store'
 import BreadCrumb from '@/components/BreadCrumb/index.vue'
 // import ErrorLog from '@/components/ErrorLog/index.vue'
 // import Hamburger from '@/components/Hamburger/index.vue'
-// import HeaderSearch from '@/components/HeaderSearch/index.vue'
+import HeaderSearch from '@/components/HeaderSearch/index.vue'
 // import LangSelect from '@/components/LangSelect/index.vue'
 import ScreenFull from '@/components/ScreenFull/index.vue'
 // import SizeSelect from '@/components/SizeSelect/index.vue'
@@ -86,7 +86,8 @@ export default defineComponent({
   components: {
     HamburgerComponent,
     BreadCrumb,
-    ScreenFull
+    ScreenFull,
+    HeaderSearch
   },
   data() {
     const appStore = useAppStore()

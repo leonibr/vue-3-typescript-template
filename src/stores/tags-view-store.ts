@@ -10,19 +10,19 @@ export interface ITagsViewState {
   cachedViews: (string | undefined)[]
 }
 
-export const useTagsView = defineStore('tagsViewStore', {
+export const useTagsViewStore = defineStore('tagsViewStore', {
   state: (): ITagsViewState => ({
     visitedViews: [],
     cachedViews: []
   }),
   getters: {
-    visitedViews: (state) => state.visitedViews,
-    cachedViews: (state) => state.cachedViews
+    getVisitedViews: (state) => state.visitedViews,
+    getCachedViews: (state) => state.cachedViews
   },
   actions: {
     ADD_VISITED_VIEW(view: ITagView) {
-      if (this.visitedViews.some((v) => v.path === view.path)) return
-      this.visitedViews.push(
+      if (this.getVisitedViews.some((v) => v.path === view.path)) return
+      this.getVisitedViews.push(
         Object.assign({}, view, {
           title: view.title || 'no-name'
         })
@@ -31,16 +31,16 @@ export const useTagsView = defineStore('tagsViewStore', {
 
     ADD_CACHED_VIEW(view: ITagView) {
       if (view.name === null) return
-      if (this.cachedViews.includes(view.name!.toString())) return
+      if (this.getCachedViews.includes(view.name!.toString())) return
       if (!view.meta!.noCache) {
-        this.cachedViews.push(view.name!.toString())
+        this.getCachedViews.push(view.name!.toString())
       }
     },
 
     DEL_VISITED_VIEW(view: ITagView) {
-      for (const [i, v] of this.visitedViews.entries()) {
+      for (const [i, v] of this.getVisitedViews.entries()) {
         if (v.path === view.path) {
-          this.visitedViews.splice(i, 1)
+          this.getVisitedViews.splice(i, 1)
           break
         }
       }
@@ -48,8 +48,8 @@ export const useTagsView = defineStore('tagsViewStore', {
 
     DEL_CACHED_VIEW(view: ITagView) {
       if (view.name === null) return
-      const index = this.cachedViews.indexOf(view.name!.toString())
-      index > -1 && this.cachedViews.splice(index, 1)
+      const index = this.getCachedViews.indexOf(view.name!.toString())
+      index > -1 && this.getCachedViews.splice(index, 1)
     },
 
     DEL_OTHERS_VISITED_VIEWS(view: ITagView) {
@@ -71,7 +71,7 @@ export const useTagsView = defineStore('tagsViewStore', {
 
     DEL_ALL_VISITED_VIEWS() {
       // keep affix tags
-      const affixTags = this.visitedViews.filter((tag) => tag.meta!.affix)
+      const affixTags = this.getVisitedViews.filter((tag) => tag.meta!.affix)
       this.visitedViews = affixTags
     },
 
@@ -80,7 +80,7 @@ export const useTagsView = defineStore('tagsViewStore', {
     },
 
     UPDATE_VISITED_VIEW(view: ITagView) {
-      for (let v of this.visitedViews) {
+      for (let v of this.getVisitedViews) {
         if (v.path === view.path) {
           v = Object.assign(v, view)
           break

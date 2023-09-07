@@ -1,21 +1,29 @@
 <template>
   <section class="app-main">
-    <transition name="fade-transform" mode="out-in">
+    <!-- <transition name="fade-transform" mode="out-in">
       <keep-alive :include="cachedViews">
         <router-view :key="key" />
       </keep-alive>
-    </transition>
+    </transition> -->
+
+    <router-view v-slot="{ Component }">
+      <transition name="fade-transform" mode="out-in">
+        <keep-alive :include="cachedViews">
+          <component :is="Component" :key="key" />
+        </keep-alive>
+      </transition>
+    </router-view>
   </section>
 </template>
 
 <script lang="ts">
 import { ref, defineComponent } from 'vue'
-import { useTagsView } from '@/stores/tags-view-store'
+import { useTagsViewStore } from '@/stores/tags-view-store'
 import { useRoute } from 'vue-router'
 
 export default defineComponent({
-  data() {
-    const tagStore = useTagsView()
+  setup() {
+    const tagStore = useTagsViewStore()
     const route = useRoute()
     const key = ref(route.path)
     const cachedViews = ref(tagStore.cachedViews as unknown as (string | RegExp)[])

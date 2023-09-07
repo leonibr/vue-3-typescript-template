@@ -17,6 +17,7 @@
     "@yzfe/svgicon": "^1.1.0",
     "@yzfe/vue3-svgicon": "^1.0.1",
     "element-plus": "^2.3.12",
+    "fuse.js": "^6.6.2",
     "js-cookie": "^3.0.5",
     "path-to-regexp": "^6.2.1",
     "pinia": "^2.1.6",
