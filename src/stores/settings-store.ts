@@ -19,7 +19,7 @@ export interface SettingsPayLoad {
 export const useSettingsStore = defineStore('settingsStore', {
   state: () =>
     <SettingsState>{
-      theme: elementVariables.theme,
+      theme: elementVariables,
       fixedHeader: defaultSettings.fixedHeader,
       showSettings: defaultSettings.showSettings,
       showTagsView: defaultSettings.showTagsView,
@@ -33,7 +33,7 @@ export const useSettingsStore = defineStore('settingsStore', {
         ;(this as any)[key] = value
       }
     },
-    ChangeSetting(payload: SettingsPayLoad) {
+    changeSetting(payload: SettingsPayLoad) {
       this.CHANGE_SETTING(payload)
     }
   }

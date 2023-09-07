@@ -1,17 +1,17 @@
 <template>
   <div class="navbar">
-    <hamburger
+    <hamburger-component
       id="hamburger-container"
-      :is-active="sidebar().opened"
+      :is-active="sidebar.opened"
       class="hamburger-container"
       @toggle-click="toggleSideBar"
     />
-    <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
+    <bread-crumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
-      <template v-if="device() !== 'mobile'">
+      <template v-if="device !== 'mobile'">
         <header-search class="right-menu-item" />
         <error-log class="errLog-container right-menu-item hover-effect" />
-        <screenfull class="right-menu-item hover-effect" />
+        <screen-full class="right-menu-item hover-effect" />
         <el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
           <size-select class="right-menu-item hover-effect" />
         </el-tooltip>
@@ -19,7 +19,7 @@
       </template>
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
-          <img :src="avatar() + '?imageView2/1/w/80/h/80'" class="user-avatar" />
+          <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu>
@@ -58,14 +58,15 @@
 // import { Component, Vue } from 'vue-property-decorator'
 import { useAppStore } from '@/stores/app-store'
 // import { UserModule } from '@/store/modules/user'
-// import Breadcrumb from '@/components/Breadcrumb/index.vue'
+import BreadCrumb from '@/components/BreadCrumb/index.vue'
 // import ErrorLog from '@/components/ErrorLog/index.vue'
 // import Hamburger from '@/components/Hamburger/index.vue'
 // import HeaderSearch from '@/components/HeaderSearch/index.vue'
 // import LangSelect from '@/components/LangSelect/index.vue'
-// import Screenfull from '@/components/Screenfull/index.vue'
+import ScreenFull from '@/components/ScreenFull/index.vue'
 // import SizeSelect from '@/components/SizeSelect/index.vue'
 import { defineComponent } from 'vue'
+import HamburgerComponent from '@/components/HamburgerComponent/index.vue'
 
 //   @Component({
 //     name: 'Navbar',
@@ -82,28 +83,30 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
   name: 'NavBar',
+  components: {
+    HamburgerComponent,
+    BreadCrumb,
+    ScreenFull
+  },
   data() {
     const appStore = useAppStore()
     return {
       appStore
     }
   },
-  methods: {
+  computed: {
     sidebar() {
       return this.appStore.sidebar
     },
 
     device() {
       return this.appStore.device.toString()
-    },
-
+    }
+  },
+  methods: {
     avatar() {
       return ''
       //      return UserModule.avatar
-    },
-
-    $t(d: string) {
-      return d
     },
 
     toggleSideBar() {

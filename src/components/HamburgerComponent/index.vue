@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { defineComponent } from 'vue'
-import HamburgerIcon from '@/components/icons/IconHamburger.vue'
+import svgHambuger from '@/icons/svg/hamburger.svg'
 </script>
 
 <template>
   <div :class="[{ 'is-active': isActive }]" @click="toggleClick">
-    <hamburger-icon />
+    <icon :data="svgHambuger" original></icon>
   </div>
 </template>
 
@@ -25,6 +25,10 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
+.svg-icon {
+  vertical-align: middle;
+}
+
 .is-active {
   transform: rotate(180deg);
 }

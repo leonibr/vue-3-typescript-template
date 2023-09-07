@@ -208,6 +208,44 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.1.tgz#b520529ec21d8e5945a1851dfd1c32e94e39ff45"
   integrity sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==
 
+"@intlify/core-base@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@intlify/core-base/-/core-base-9.3.0.tgz#fa42e32f89f06d421772fcedeec7dfba845ba98f"
+  integrity sha512-SRzn8TMnPZ6MY8OFrgouRq4DGaf01SHcJEF6FglYFYvRkgPzziEcQe+v2PD+O5lUp/rJafP4dabm1CmsVAA7rA==
+  dependencies:
+    "@intlify/devtools-if" "9.3.0"
+    "@intlify/message-compiler" "9.3.0"
+    "@intlify/shared" "9.3.0"
+    "@intlify/vue-devtools" "9.3.0"
+
+"@intlify/devtools-if@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@intlify/devtools-if/-/devtools-if-9.3.0.tgz#ae5a4d3577e05577e65bb6abbb0506d8af9309f6"
+  integrity sha512-5aKZnqj0Ff4dfwBX2Oo+MheVs00CBnC0RzWK26aT2M4AF0cxdFLOJAs51/eHT01jmzrxSvfBMjdArUWHwgetfg==
+  dependencies:
+    "@intlify/shared" "9.3.0"
+
+"@intlify/message-compiler@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@intlify/message-compiler/-/message-compiler-9.3.0.tgz#203366fe7448255731e951507c4d79093bf898b1"
+  integrity sha512-D8tSJEhTCSFcCzkThjE4Sbk1tIdvzkYa1FaVIzUtZ8hKPATvokNrOiDw1i/h671m8A80l9Ywq594i/LPTB6EJA==
+  dependencies:
+    "@intlify/shared" "9.3.0"
+    source-map-js "^1.0.2"
+
+"@intlify/shared@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@intlify/shared/-/shared-9.3.0.tgz#8875120f1e6826be0e99b623e2618167402bfe41"
+  integrity sha512-MMGRz6zWxtz7rHtxIIdnyb8SYOIaaseN1IvUhAEs9tOW4u77RD4DFp4qgPXesp2Gxo/5QitH9kwSs0jnxGUNEw==
+
+"@intlify/vue-devtools@9.3.0":
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/@intlify/vue-devtools/-/vue-devtools-9.3.0.tgz#f3137319fadaa92686de11be5ef28209dc828455"
+  integrity sha512-kEaxIz1VEgsz2q5RhoS+fBGTkXr/4+pxmK9mN14+speVGb82HPRntKBmz0GO18I1JisD4Z0vAva+KCTHGeAqbQ==
+  dependencies:
+    "@intlify/core-base" "9.3.0"
+    "@intlify/shared" "9.3.0"
+
 "@jest/schemas@^29.6.3":
   version "29.6.3"
   resolved "https://registry.yarnpkg.com/@jest/schemas/-/schemas-29.6.3.tgz#430b5ce8a4e0044a7e3819663305a7b3091c8e03"
@@ -350,10 +388,10 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-20.5.7.tgz#4b8ecac87fbefbc92f431d09c30e176fc0a7c377"
   integrity sha512-dP7f3LdZIysZnmvP3ANJYTSwg+wLLl8p7RqniVlV7j+oXSXAbt9h0WIBFmJy5inWZoX9wZN6eXx+YXd9Rh3RBA==
 
-"@types/node@^18.17.5":
-  version "18.17.12"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.17.12.tgz#c6bd7413a13e6ad9cfb7e97dd5c4e904c1821e50"
-  integrity sha512-d6xjC9fJ/nSnfDeU0AMDsaJyb1iHsqCSOdi84w4u+SlN/UgQdY5tRhpMzaFYsI4mnpvgTivEaQd0yOUhAtOnEQ==
+"@types/node@^20.5.9":
+  version "20.5.9"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-20.5.9.tgz#a70ec9d8fa0180a314c3ede0e20ea56ff71aed9a"
+  integrity sha512-PcGNd//40kHAS3sTlzKB9C9XL4K0sTup8nbG5lC14kzEteTNuAFh9u5nA0o5TWnSG2r/JNPRXFVcHJIIeRlmqQ==
 
 "@types/semver@^7.3.12":
   version "7.5.1"
@@ -699,10 +737,10 @@
   dependencies:
     vue-demi "*"
 
-"@yzfe/svgicon-gen@^1.2.0":
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/@yzfe/svgicon-gen/-/svgicon-gen-1.2.0.tgz#45a67cf48464591df2953a10f80523b325ba47f6"
-  integrity sha512-H14xT0IVzeTL+zNBdU/fiuB/S8LbPNvGFyrUT6gSNTZYI3y494F1NNEJqn3zk5J7N0+bJexQQyasZNh/BfpbNw==
+"@yzfe/svgicon-gen@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@yzfe/svgicon-gen/-/svgicon-gen-1.2.2.tgz#254071fc41e093c3c94120515abdc2751f22277e"
+  integrity sha512-OzkT/xgj5A0I9vvOL12030Qr0AS6E38jYpz2B0d9wHJ+ixDILkh8U/zji3nov1KXrLL+RTTUH7DBcAJrakQEkQ==
   dependencies:
     "@types/svgo" "^2.6.3"
     lodash "^4.17.21"
@@ -2597,6 +2635,11 @@ path-parse@^1.0.7:
   resolved "https://registry.yarnpkg.com/path-parse/-/path-parse-1.0.7.tgz#fbc114b60ca42b30d9daf5858e4bd68bbedb6735"
   integrity sha512-LDJzPVEEEPR+y48z93A0Ed0yXb8pAByGWo/k5YYdYgpY2/2EsOsksJrq7lOHxryrVOn1ejG6oAp8ahvOIQD8sw==
 
+path-to-regexp@^6.2.1:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/path-to-regexp/-/path-to-regexp-6.2.1.tgz#d54934d6798eb9e5ef14e7af7962c945906918e5"
+  integrity sha512-JLyh7xT1kizaEvcaXOQwOc2/Yhw6KZOvPf1S8401UyLk86CU79LN3vl7ztXGm/pZ+YjoyAJ4rxmHwbkBXJX+yw==
+
 path-type@^3.0.0:
   version "3.0.0"
   resolved "https://registry.yarnpkg.com/path-type/-/path-type-3.0.0.tgz#cef31dc8e0a1a3bb0d105c0cd97cf3bf47f4e36f"
@@ -2850,6 +2893,11 @@ saxes@^6.0.0:
   integrity sha512-xAg7SOnEhrm5zI3puOOKyy1OMcMlIJZYNJY7xLBwSze0UjhPLnWfj2GF2EpT0jmzaJKIWKHLsaSSajf35bcYnA==
   dependencies:
     xmlchars "^2.2.0"
+
+screenfull@^6.0.2:
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/screenfull/-/screenfull-6.0.2.tgz#3dbe4b8c4f8f49fb8e33caa8f69d0bca730ab238"
+  integrity sha512-AQdy8s4WhNvUZ6P8F6PB21tSPIYKniic+Ogx0AacBMjKP1GUHN2E9URxQHtCusiwxudnCKkdy4GrHXPPJSkCCw==
 
 scule@^1.0.0:
   version "1.0.0"
@@ -3336,13 +3384,13 @@ vite-node@0.34.3:
     picocolors "^1.0.0"
     vite "^3.0.0 || ^4.0.0"
 
-vite-plugin-svgicon@^1.3.1:
-  version "1.3.1"
-  resolved "https://registry.yarnpkg.com/vite-plugin-svgicon/-/vite-plugin-svgicon-1.3.1.tgz#73332e95b3e6853aeb11a462f0a087304940f39c"
-  integrity sha512-eUXFJejLvSfZUKDZt5g+nfgNJAZKsHSdRk0SyIx6FsOfQ6a9/yQ6AmRtsUWH1C2RYrjRgoBh4FCR3geHQsXuzA==
+vite-plugin-svgicon@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/vite-plugin-svgicon/-/vite-plugin-svgicon-1.3.3.tgz#4a6528fca7fbef163189ae27efdc5566ee885eda"
+  integrity sha512-rOGyKGxGW6puXxPTIaHQ2dUcU2dSgtDKejiQKWPOxasBP9VPXnCUw4vZH7QokJGmD/TTd4G0gmYKX+2kbzcgxQ==
   dependencies:
     "@types/svgo" "^2.6.3"
-    "@yzfe/svgicon-gen" "^1.2.0"
+    "@yzfe/svgicon-gen" "^1.2.2"
 
 "vite@^3.0.0 || ^4.0.0", vite@^4.4.9:
   version "4.4.9"
@@ -3407,6 +3455,16 @@ vue-eslint-parser@^9.1.1, vue-eslint-parser@^9.3.1:
     esquery "^1.4.0"
     lodash "^4.17.21"
     semver "^7.3.6"
+
+vue-i18n@9:
+  version "9.3.0"
+  resolved "https://registry.yarnpkg.com/vue-i18n/-/vue-i18n-9.3.0.tgz#d85551098ab377e4237a101c77bfc05fd4887ff5"
+  integrity sha512-+2L+ae/e4+fixhjym3lgzGCGQG8wVGlGrDHzjfdgUudheHvbVHu5i6tn6FF+buH75UFA7T5ZO2ZO7zrh6CzuaA==
+  dependencies:
+    "@intlify/core-base" "9.3.0"
+    "@intlify/shared" "9.3.0"
+    "@intlify/vue-devtools" "9.3.0"
+    "@vue/devtools-api" "^6.5.0"
 
 vue-router@^4.2.4:
   version "4.2.4"

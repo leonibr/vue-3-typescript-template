@@ -5,26 +5,8 @@
     <div :class="{ hasTagsView: showTagsView }" class="main-container">
       <div :class="{ 'fixed-header': fixedHeader }">
         <nav-bar />
-        <!-- <tags-view v-if="showTagsView" /> -->
+        <tags-view v-if="showTagsView" />
       </div>
-      <el-button type="primary" @click="count++">count is: {{ count }}</el-button>
-      <el-menu class="el-menu-demo" mode="horizontal">
-        <el-menu-item index="1">Processing Center</el-menu-item>
-        <el-sub-menu index="2">
-          <template #title>Workspace</template>
-          <el-menu-item index="2-1">item one</el-menu-item>
-          <el-menu-item index="2-2">item two</el-menu-item>
-          <el-menu-item index="2-3">item three</el-menu-item>
-          <el-sub-menu index="2-4">
-            <template #title>item four</template>
-            <el-menu-item index="2-4-1">item one</el-menu-item>
-            <el-menu-item index="2-4-2">item two</el-menu-item>
-            <el-menu-item index="2-4-3">item three</el-menu-item>
-          </el-sub-menu>
-        </el-sub-menu>
-        <el-menu-item index="3" disabled>Info</el-menu-item>
-        <el-menu-item index="4">Orders</el-menu-item>
-      </el-menu>
       <app-main />
       <right-panel v-if="showSettings">
         <settings />
@@ -149,7 +131,7 @@
 import { useSettingsStore } from '@/stores/settings-store'
 import AppMain from './components/AppMain.vue'
 import NavBar from './components/NavBar.vue'
-import SideBar from '@/layout/components/side-bar/index.vue'
+import SideBar from '@/layout/components/SideBar/index.vue'
 import { DeviceType, useAppStore } from '@/stores/app-store'
 import { defineComponent } from 'vue'
 import ResizeMixin from '@/layout/mixins/resize-mixin'
