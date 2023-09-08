@@ -31,27 +31,27 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
   all roles can be accessed
 */
 export const constantRoutes: RouteRecordRaw[] = [
-  {
-    path: '/redirect',
-    component: LayOut,
-    meta: { hidden: true },
-    children: [
-      {
-        path: '/redirect/:path(.*)',
-        component: () => import('@/views/redirect/index.vue')
-      }
-    ]
-  },
-  {
-    path: '/login',
-    component: () => import('@/views/login/index.vue'),
-    meta: { hidden: true }
-  },
-  {
-    path: '/auth-redirect',
-    component: () => import('@/views/login/auth-redirect.vue'),
-    meta: { hidden: true }
-  },
+  // {
+  //   path: '/redirect',
+  //   component: LayOut,
+  //   meta: { hidden: true },
+  //   children: [
+  //     {
+  //       path: '/redirect/:path(.*)',
+  //       component: () => import('@/views/redirect/index.vue')
+  //     }
+  //   ]
+  // },
+  // {
+  //   path: '/login',
+  //   component: () => import('@/views/login/index.vue'),
+  //   meta: { hidden: true }
+  // },
+  // {
+  //   path: '/auth-redirect',
+  //   component: () => import('@/views/login/auth-redirect.vue'),
+  //   meta: { hidden: true }
+  // },
   {
     path: '/404',
     component: () => import('@/views/error-page/404.vue'),
