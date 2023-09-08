@@ -36,6 +36,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     ScreenFull: typeof import('./src/components/ScreenFull/index.vue')['default']
+    SizeSelect: typeof import('./src/components/SizeSelect/index.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }

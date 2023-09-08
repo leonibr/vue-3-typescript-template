@@ -64,6 +64,7 @@ import BreadCrumb from '@/components/BreadCrumb/index.vue'
 import HeaderSearch from '@/components/HeaderSearch/index.vue'
 // import LangSelect from '@/components/LangSelect/index.vue'
 import ScreenFull from '@/components/ScreenFull/index.vue'
+import SizeSelect from '@/components/SizeSelect/index.vue'
 // import SizeSelect from '@/components/SizeSelect/index.vue'
 import { defineComponent } from 'vue'
 import HamburgerComponent from '@/components/HamburgerComponent/index.vue'
@@ -87,7 +88,8 @@ export default defineComponent({
     HamburgerComponent,
     BreadCrumb,
     ScreenFull,
-    HeaderSearch
+    HeaderSearch,
+    SizeSelect
   },
   data() {
     const appStore = useAppStore()
