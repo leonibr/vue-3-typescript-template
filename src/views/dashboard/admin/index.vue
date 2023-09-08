@@ -67,7 +67,7 @@ import GithubCorner from '@/components/GithubCorner/index.vue'
 import BarChart from './components/BarChart.vue'
 import BoxCard from './components/BoxCard.vue'
 import PanelGroup from './components/PanelGroup.vue'
-// import PieChart from './components/PieChart.vue'
+import PieChart from './components/PieChart.vue'
 // import RadarChart from './components/RadarChart.vue'
 // import TodoList from './components/TodoList/index.vue'
 // import TransactionTable from './components/TransactionTable.vue'
@@ -95,7 +95,8 @@ export default defineComponent({
     PanelGroup,
     BarChart,
     LineChart,
-    BoxCard
+    BoxCard,
+    PieChart
   },
   setup() {
     const rawLineChartData: { [type: string]: ILineChartData } = {
