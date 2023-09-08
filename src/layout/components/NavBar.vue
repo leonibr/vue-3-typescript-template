@@ -55,46 +55,34 @@
 </template>
 
 <script lang="ts">
-// import { Component, Vue } from 'vue-property-decorator'
-import { useAppStore } from '@/stores/app-store'
-// import { UserModule } from '@/store/modules/user'
 import BreadCrumb from '@/components/BreadCrumb/index.vue'
-// import ErrorLog from '@/components/ErrorLog/index.vue'
-// import Hamburger from '@/components/Hamburger/index.vue'
+import ErrorLog from '@/components/ErrorLog.vue'
+import HamburgerComponent from '@/components/HamburgerComponent/index.vue'
 import HeaderSearch from '@/components/HeaderSearch/index.vue'
-// import LangSelect from '@/components/LangSelect/index.vue'
+import LangSelect from '@/components/LangSelect/index.vue'
 import ScreenFull from '@/components/ScreenFull/index.vue'
 import SizeSelect from '@/components/SizeSelect/index.vue'
-// import SizeSelect from '@/components/SizeSelect/index.vue'
 import { defineComponent } from 'vue'
-import HamburgerComponent from '@/components/HamburgerComponent/index.vue'
-
-//   @Component({
-//     name: 'Navbar',
-//     components: {
-//       Breadcrumb,
-//       ErrorLog,
-//       Hamburger,
-//       HeaderSearch,
-//       LangSelect,
-//       Screenfull,
-//       SizeSelect
-//     }
-//   })
+import { useAppStore } from '@/stores/app-store'
+import { useUserStore } from '@/stores/user-store'
 
 export default defineComponent({
   name: 'NavBar',
   components: {
-    HamburgerComponent,
     BreadCrumb,
-    ScreenFull,
+    ErrorLog,
+    HamburgerComponent,
     HeaderSearch,
+    LangSelect,
+    ScreenFull,
     SizeSelect
   },
   data() {
     const appStore = useAppStore()
+    const userStore = useUserStore()
     return {
-      appStore
+      appStore,
+      userStore
     }
   },
   computed: {
@@ -117,12 +105,12 @@ export default defineComponent({
       appStore.toggleSidebar(false)
     },
 
-    logout() {
+    async logout() {
       console.warn('logout clicked')
-      // await UserModule.LogOut()
-      //   this.$router.push(`/login?redirect=${this.$route.fullPath}`).catch((err) => {
-      //     console.warn(err)
-      //   })
+      await this.userStore.LogOut()
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`).catch((err) => {
+        console.warn(err)
+      })
     }
   }
 })

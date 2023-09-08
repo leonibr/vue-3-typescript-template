@@ -82,3 +82,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+.size-icon {
+  margin-top: 17px;
+}
+</style>

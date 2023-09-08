@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-interface IErrorLog {
+export interface IErrorLog {
   err: Error
   vm: any
   info: string
@@ -26,7 +26,7 @@ export const useErrorLogStore = defineStore('errorLogStore', {
     AddErrorLog(log: IErrorLog) {
       this.ADD_ERROR_LOG(log)
     },
-    ClearErrorLog() {
+    clearErrorLog() {
       this.CLEAR_ERROR_LOG()
     }
   }
