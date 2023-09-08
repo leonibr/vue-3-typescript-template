@@ -5,7 +5,7 @@
     <panel-group @handle-set-line-chart-data="handleSetLineChartData" />
 
     <el-row style="background: #fff; padding: 16px 16px 0; margin-bottom: 32px">
-      <line-chart :chart-data="lineChartData" />
+      <line-chart :chart-data="lineChartData!" />
     </el-row>
 
     <el-row :gutter="32">
@@ -68,26 +68,12 @@ import BarChart from './components/BarChart.vue'
 import BoxCard from './components/BoxCard.vue'
 import PanelGroup from './components/PanelGroup.vue'
 import PieChart from './components/PieChart.vue'
-// import RadarChart from './components/RadarChart.vue'
-// import TodoList from './components/TodoList/index.vue'
-// import TransactionTable from './components/TransactionTable.vue'
+import RadarChart from './components/RadarChart.vue'
+import TodoList from './components/TodoList/index.vue'
+import TransactionTable from './components/TransactionTable.vue'
 import LineChart, { type ILineChartData } from './components/LineChart.vue'
 import { defineComponent, ref } from 'vue'
 
-// @Component({
-//   name: 'DashboardAdmin',
-//   components: {
-//     GithubCorner,
-//     BarChart,
-//     BoxCard,
-//     LineChart,
-//     PanelGroup,
-//     PieChart,
-//     RadarChart,
-//     TodoList,
-//     TransactionTable
-//   }
-// })
 export default defineComponent({
   name: 'AdminDashboard',
   components: {
@@ -96,7 +82,10 @@ export default defineComponent({
     BarChart,
     LineChart,
     BoxCard,
-    PieChart
+    PieChart,
+    RadarChart,
+    TodoList,
+    TransactionTable
   },
   setup() {
     const rawLineChartData: { [type: string]: ILineChartData } = {

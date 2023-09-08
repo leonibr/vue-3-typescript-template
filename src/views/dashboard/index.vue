@@ -28,7 +28,7 @@ export default defineComponent({
   },
   created() {
     if (!this.roles.includes('admin')) {
-      this.currentRole = 'admin-dashboard'
+      this.currentRole = 'editor-dashboard'
     }
   },
   computed: {

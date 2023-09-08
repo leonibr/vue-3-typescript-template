@@ -96,7 +96,7 @@ export default defineComponent({
   },
   methods: {
     avatar() {
-      return ''
+      return this.userStore.avatar
       //      return UserModule.avatar
     },
 
