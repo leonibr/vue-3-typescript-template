@@ -3,8 +3,8 @@ import ElementPlus from 'element-plus'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import { VueSvgIconPlugin } from '@yzfe/vue3-svgicon'
-// import '@yzfe/svgicon/lib/svgicon.css' - replaced by custom theme
-import '@/assets/custom/svg-icon.css'
+import '@yzfe/svgicon/lib/svgicon.css' //- replaced by custom theme
+// import '@/assets/custom/svg-icon.css'
 import App from './App.vue'
 import router from './router'
 import { useAppStore } from './stores/app-store'
@@ -21,7 +21,9 @@ app.use(ElementPlus, {
   size: appStore.size
 })
 app.use(VueSvgIconPlugin, {
-  tagName: 'icon'
+  tagName: 'icon',
+  defaultWidth: '1em',
+  defaultHeight: '1em'
 })
 
 app.use(router)

@@ -42,11 +42,11 @@ export const constantRoutes: RouteRecordRaw[] = [
   //     }
   //   ]
   // },
-  // {
-  //   path: '/login',
-  //   component: () => import('@/views/login/index.vue'),
-  //   meta: { hidden: true }
-  // },
+  {
+    path: '/login',
+    component: () => import('@/views/login/index.vue'),
+    meta: { hidden: true }
+  },
   // {
   //   path: '/auth-redirect',
   //   component: () => import('@/views/login/auth-redirect.vue'),

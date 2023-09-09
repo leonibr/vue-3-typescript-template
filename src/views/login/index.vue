@@ -1,7 +1,7 @@
 <template>
   <div class="login-container">
     <el-form
-      ref="loginForm"
+      ref="loginFormHtml"
       :model="loginForm"
       :rules="loginRules"
       class="login-form"
@@ -16,9 +16,6 @@
       </div>
 
       <el-form-item prop="username">
-        <span class="svg-container">
-          <svg-icon name="user" />
-        </span>
         <el-input
           ref="username"
           v-model="loginForm.username"
@@ -27,14 +24,17 @@
           type="text"
           tabindex="1"
           autocomplete="on"
-        />
+        >
+          <template #prefix>
+            <span class="svg-container">
+              <icon :data="svg.user" />
+            </span>
+          </template>
+        </el-input>
       </el-form-item>
 
       <el-tooltip v-model="capsTooltip" content="Caps lock is On" placement="right" manual>
         <el-form-item prop="password">
-          <span class="svg-container">
-            <svg-icon name="password" />
-          </span>
           <el-input
             :key="passwordType"
             ref="password"
@@ -47,10 +47,18 @@
             @keyup="checkCapslock"
             @blur="capsTooltip = false"
             @keyup.enter="handleLogin"
-          />
-          <span class="show-pwd" @click="showPwd">
-            <svg-icon :name="passwordType === 'password' ? 'eye-off' : 'eye-on'" />
-          </span>
+          >
+            <template #prefix>
+              <span class="svg-container">
+                <icon :data="svg.password" />
+              </span>
+            </template>
+            <template #suffix>
+              <span class="show-pwd" @click="showPwd">
+                <icon :data="passwordType === 'password' ? svg.eyeOff : svg.eyeOn" />
+              </span>
+            </template>
+          </el-input>
         </el-form-item>
       </el-tooltip>
 
@@ -58,7 +66,7 @@
         :loading="loading"
         type="primary"
         style="width: 100%; margin-bottom: 30px"
-        @click.native.prevent="handleLogin"
+        @click.prevent="handleLogin"
       >
         {{ $t('login.logIn') }}
       </el-button>
@@ -90,14 +98,18 @@
 </template>
 
 <script lang="ts">
-import { Dictionary } from 'vue-router/types/router'
-import { Form as ElForm, Input } from 'element-ui'
-import { UserModule } from '@/store/modules/user'
+import { ElForm as Form, ElInput } from 'element-plus'
 import { isValidUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect/index.vue'
 // import SocialSign from './components/SocialSignin.vue'
 import { defineComponent, reactive, ref, watch } from 'vue'
-import { useRoute, RouteLocationNormalizedLoaded } from 'vue-router'
+import { useRoute, type RouteLocationNormalizedLoaded } from 'vue-router'
+import { useUserStore } from '@/stores/user-store'
+import { Dictionary } from 'vue-router/types/router'
+import user from '@/icons/svg/user.svg'
+import password from '@/icons/svg/password.svg'
+import eyeOff from '@/icons/svg/eye-off.svg'
+import eyeOn from '@/icons/svg/eye-on.svg'
 
 const validateUsername = (rule: any, value: string, callback: (vare?: any) => void) => {
   if (!isValidUsername(value)) {
@@ -124,12 +136,13 @@ export default defineComponent({
   },
   setup() {
     const route = useRoute()
+    const userStore = useUserStore()
     const passwordType = ref('password')
     const loading = ref(false)
     const showDialog = ref(false)
     const capsTooltip = ref(false)
     const redirect = ref<string | null>(null)
-    Dictionary<string> = {}
+    const otherQuery = reactive<Dictionary<string>>({})
     const loginForm = reactive({
       username: 'admin',
       password: '111111'
@@ -147,14 +160,22 @@ export default defineComponent({
       showDialog,
       capsTooltip,
       redirect,
-      route
+      route,
+      userStore,
+      otherQuery,
+      svg: {
+        user,
+        password,
+        eyeOff,
+        eyeOn
+      }
     }
   },
   mounted() {
     if (this.loginForm.username === '') {
-      ;(this.$refs.username as Input).focus()
+      ;(this.$refs.username as typeof ElInput).focus()
     } else if (this.loginForm.password === '') {
-      ;(this.$refs.password as Input).focus()
+      ;(this.$refs.password as typeof ElInput).focus()
     }
     watch(reactive(this.route), (route) => this.onRouteChange(route))
   },
@@ -180,15 +201,16 @@ export default defineComponent({
         this.passwordType = 'password'
       }
       this.$nextTick(() => {
-        ;(this.$refs.password as Input).focus()
+        ;(this.$refs.password as typeof ElInput).focus()
       })
     },
 
     handleLogin() {
-      ;(this.$refs.loginForm as ElForm).validate(async (valid: boolean) => {
+      debugger
+      ;(this.$refs.loginFormHtml as typeof Form).validate(async (valid: boolean) => {
         if (valid) {
           this.loading = true
-          await UserModule.Login(this.loginForm)
+          await this.userStore.Login(this.loginForm)
           this.$router
             .push({
               path: this.redirect || '/',
@@ -236,14 +258,15 @@ export default defineComponent({
   .el-input {
     display: inline-block;
     height: 47px;
-    width: 85%;
+    width: 99%;
 
-    input {
+    .el-input__wrapper {
       height: 47px;
       background: transparent;
       border: 0px;
-      border-radius: 0px;
-      padding: 12px 5px 12px 15px;
+      border-radius: 4px;
+      width: 100%;
+      padding: 0; // 12px 5px 12px 15px;
       color: $lightGray;
       caret-color: $loginCursorColor;
       -webkit-appearance: none;
@@ -298,6 +321,10 @@ export default defineComponent({
     vertical-align: middle;
     width: 30px;
     display: inline-block;
+    .svg-icon {
+      width: 1em;
+      height: 1em;
+    }
   }
 
   .title-container {
