@@ -1,5 +1,4 @@
 import { asyncRoutes, constantRoutes } from '@/router'
-import Module from 'module'
 import { defineStore } from 'pinia'
 import type { RouteRecordRaw } from 'vue-router'
 

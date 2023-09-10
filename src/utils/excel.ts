@@ -34,7 +34,7 @@ const generateArray = (table: HTMLElement) => {
       }
       const cellValue = cell.innerText
       // Skip ranges
-      ranges.forEach(function (range) {
+      ranges.forEach(function(range) {
         if (
           R >= range.s.r &&
           R <= range.e.r &&

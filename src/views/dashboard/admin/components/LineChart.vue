@@ -30,7 +30,7 @@ export default defineComponent({
       default: '350px'
     }
   },
-  setup(props, _) {
+  setup(props) {
     return {
       vmChartData: reactive(props.chartData)
     }

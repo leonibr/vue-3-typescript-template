@@ -14,7 +14,7 @@ const env = loadEnv(process.env.NODE_ENV!, process.cwd(), '')
 console.log({ NODE_ENV: env.VITE_VUE_APP_BASE_API })
 const devServerPort = 9527 // TODO: get this variable from setting.ts
 const mockServerPort = 9528 // TODO: get this variable from setting.ts
-const name = 'Vue Typescript Admin' // TODO: get this variable from setting.ts
+// const name = 'Vue Typescript Admin' // TODO: get this variable from setting.ts
 
 // https://vitejs.dev/config/
 export default defineConfig({

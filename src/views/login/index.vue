@@ -206,7 +206,7 @@ export default defineComponent({
     },
 
     handleLogin() {
-      ;(this.$refs.loginFormHtml as typeof Form).validate(async (valid: boolean) => {
+      ;(this.$refs.loginFormHtml as typeof Form).validate(async(valid: boolean) => {
         if (valid) {
           this.loading = true
           await this.userStore.Login(this.loginForm)
