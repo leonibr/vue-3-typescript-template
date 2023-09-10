@@ -3,7 +3,7 @@ import { ElMessage, ElMessageBox } from 'element-plus'
 import { useUserStore } from '@/stores/user-store'
 
 const service = axios.create({
-  baseURL: import.meta.env.VUE_APP_BASE_API, // url = base url + request url
+  baseURL: import.meta.env.VITE_VUE_APP_BASE_API, // url = base url + request url
   timeout: 5000
   // withCredentials: true // send cookies when cross-domain requests
 })

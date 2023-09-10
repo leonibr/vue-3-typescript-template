@@ -206,7 +206,6 @@ export default defineComponent({
     },
 
     handleLogin() {
-      debugger
       ;(this.$refs.loginFormHtml as typeof Form).validate(async (valid: boolean) => {
         if (valid) {
           this.loading = true
