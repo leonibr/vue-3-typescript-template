@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import path from 'path'
+import path from 'path-browserify'
 import Fuse from 'fuse.js' // A lightweight fuzzy-search module
 import i18n from '@/lang' // Internationalization
 import { defineComponent, watch, ref, reactive, onMounted } from 'vue'
@@ -146,6 +146,7 @@ export default defineComponent({
           }
         } as unknown as RouteRecordRaw
 
+        console.log({data})
         if (router.meta && router.meta.title) {
           // generate internationalized title
           const i18ntitle = i18n.global.t(`route.${router.meta.title}`).toString()

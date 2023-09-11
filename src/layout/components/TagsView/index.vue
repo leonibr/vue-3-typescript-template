@@ -40,7 +40,7 @@
   </div>
 </template>
 <script lang="ts">
-import path from 'path'
+import path from 'path-browserify'
 import { useTagsViewStore, type ITagView } from '@/stores/tags-view-store'
 import { defineComponent, reactive } from 'vue'
 import ScrollPane from './ScrollPane.vue'

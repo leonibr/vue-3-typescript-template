@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import path from 'path'
+import path from 'path-browserify'
 import { type RouteRecordRaw } from 'vue-router'
 import { isExternal } from '@/utils/validate'
 import SidebarItemLink from './SidebarItemLink.vue'
@@ -108,7 +108,9 @@ export default defineComponent({
       if (isExternal(this.basePath)) {
         return this.basePath
       }
-      return path.resolve(this.basePath, routePath)
+      const pathResponse = path.resolve(this.basePath, routePath)
+      console.log({pathResponse})
+      return pathResponse
     }
   }
 })
