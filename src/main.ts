@@ -1,3 +1,4 @@
+import 'normalize.css'
 import './styles/index.scss'
 import ElementPlus from 'element-plus'
 import { createApp } from 'vue'

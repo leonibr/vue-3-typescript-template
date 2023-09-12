@@ -11,12 +11,17 @@
         @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''"
         @contextmenu.prevent="openMenu(tag, $event)"
       >
-        {{ $t('route.' + tag.meta!.title) }}
-        <span
+        <span class="tag-title">
+          {{ $t('route.' + tag.meta!.title) }}
+        </span>
+
+        <el-icon
           v-if="!isAffix(tag)"
           class="el-icon-close"
           @click.prevent.stop="closeSelectedTag(tag)"
-        />
+        >
+          <close />
+        </el-icon>
       </router-link>
     </scroll-pane>
     <ul
@@ -42,10 +47,11 @@
 <script lang="ts">
 import path from 'path-browserify'
 import { useTagsViewStore, type ITagView } from '@/stores/tags-view-store'
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, reactive, ref } from 'vue'
 import ScrollPane from './ScrollPane.vue'
 import { useRoute, type RouteRecordRaw } from 'vue-router'
 import { usePermissionStore } from '@/stores/permission'
+import { Close } from '@element-plus/icons-vue'
 
 type TagsViewState = {
   visible: boolean
@@ -57,7 +63,7 @@ type TagsViewState = {
 
 export default defineComponent({
   name: 'TagsView',
-  components: { ScrollPane },
+  components: { ScrollPane, Close },
   setup() {
     const route = useRoute()
     const tagsStore = useTagsViewStore()
@@ -75,6 +81,10 @@ export default defineComponent({
       permissionStore,
       state
     }
+  },
+  mounted() {
+    this.initTags()
+    this.addTags()
   },
   computed: {
     visitedViews(): ITagView[] {
@@ -126,9 +136,10 @@ export default defineComponent({
     },
 
     addTags() {
-      const { name } = this.$route
+      const route = useRoute()
+      const { name } = route
       if (name) {
-        this.tagsStore.addView(this.$route as ITagView)
+        this.tagsStore.addView(route as unknown as ITagView)
       }
       return false
     },
@@ -246,12 +257,12 @@ export default defineComponent({
     .el-icon-close {
       width: 16px;
       height: 16px;
-      vertical-align: 2px;
+      vertical-align: -2px;
       border-radius: 50%;
       text-align: center;
       transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
       transform-origin: 100% 50%;
-
+      margin-left: 8px;
       &:before {
         transform: scale(0.6);
         display: inline-block;
