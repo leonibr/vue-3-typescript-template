@@ -1,5 +1,5 @@
 <template>
-  <a v-if="isExternal(to)" :href="to" target="_blank" rel="noopener">
+  <a v-if="isExternalFn(to)" :href="to" target="_blank" rel="noopener">
     <slot />
   </a>
   <router-link v-else :to="to">
@@ -20,10 +20,9 @@ export default defineComponent({
       default: ''
     }
   },
-  data() {
-    const isExternalRef = ref(isExternal)
-    return {
-      isExternal: isExternalRef
+  methods: {
+    isExternalFn(link: string) {
+      return isExternal(link)
     }
   }
 })

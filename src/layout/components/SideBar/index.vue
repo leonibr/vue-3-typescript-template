@@ -5,8 +5,8 @@
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
-        :background-color="variables().menuBg"
-        :text-color="variables().menuText"
+        :background-color="variables.menuBg"
+        :text-color="variables.menuText"
         :active-text-color="menuActiveTextColor"
         :unique-opened="false"
         :collapse-transition="false"
@@ -27,7 +27,6 @@
 <script lang="ts">
 import SidebarItem from './SidebarItem.vue'
 import SidebarLogo from './SidebarLogo.vue'
-// import variables from '@/styles/_variables.scss'
 import { defineComponent } from 'vue'
 import { useAppStore } from '@/stores/app-store'
 import { useSettingsStore } from '@/stores/settings-store'
@@ -63,29 +62,29 @@ export default defineComponent({
     },
     isCollapse() {
       return !this.sidebar.opened
-    }
-  },
-  methods: {
+    },
     menuActiveTextColor() {
       if (this.settingsStore.sidebarTextTheme) {
         return this.settingsStore.theme
       } else {
-        return '' // variables.menuActiveText
+        return this.variables.menuActiveText
       }
-    },
-    variables() {
-      return { menuBg: '', menuText: '' } //variables
     },
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
+      console.log({ meta, path })
       // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
-        return meta.activeMenu
+        return meta.activeMenu as string
       }
       return path
+    },
+    variables() {
+      return { menuBg: '#304156', menuText: '#bfcbd9', menuActiveText: '#409EFF' } //variables
     }
-  }
+  },
+  methods: {}
 })
 </script>
 

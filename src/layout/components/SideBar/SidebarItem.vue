@@ -3,22 +3,27 @@
     v-if="!item.meta || !item.meta.hidden"
     :class="[isCollapse ? 'simple-mode' : 'full-mode', { 'first-level': isFirstLevel }]"
   >
-    <template v-if="!alwaysShowRootMenu && theOnlyOneChild() && !theOnlyOneChild()!.children">
-      <sidebar-item-link v-if="theOnlyOneChild()!.meta" :to="resolvePath(theOnlyOneChild()!.path)">
+    <template v-if="!alwaysShowRootMenu && theOnlyOneChild && !theOnlyOneChild!.children">
+      <sidebar-item-link v-if="theOnlyOneChild!.meta" :to="resolvePath(theOnlyOneChild!.path)">
         <el-menu-item
-          :index="resolvePath(theOnlyOneChild()!.path)"
+          :index="resolvePath(theOnlyOneChild!.path)"
           :class="{ 'submenu-title-noDropdown': isFirstLevel }"
         >
-          <svg-icon v-if="theOnlyOneChild()!.meta!.icon" :name="theOnlyOneChild()!.meta!.icon" />
-          <span v-if="theOnlyOneChild()!.meta!.title">{{
-            $t('route.' + theOnlyOneChild()!.meta!.title)
-          }}</span>
+          <icon
+            v-if="theOnlyOneChild!.meta!.icon"
+            :data="mapIcon(theOnlyOneChild!.meta!.icon as string)"
+          />
+          <template #title>
+            <span v-if="theOnlyOneChild!.meta!.title">{{
+              $t('route.' + theOnlyOneChild!.meta!.title)
+            }}</span>
+          </template>
         </el-menu-item>
       </sidebar-item-link>
     </template>
     <el-sub-menu v-else :index="resolvePath(item.path)" popper-append-to-body>
-      <template v-slot:title>
-        <svg-icon v-if="item.meta && item.meta.icon" :name="item.meta.icon" />
+      <template #title>
+        <icon v-if="item.meta && item.meta.icon" :data="mapIcon(item.meta.icon as string)" />
         <span v-if="item.meta && item.meta.title">{{ $t('route.' + item.meta.title) }}</span>
       </template>
       <template v-if="item.children">
@@ -42,6 +47,8 @@ import { type RouteRecordRaw } from 'vue-router'
 import { isExternal } from '@/utils/validate'
 import SidebarItemLink from './SidebarItemLink.vue'
 import { defineComponent, type PropType } from 'vue'
+import { mapperToIcon } from './mapper-icon'
+import NotFound from '@/icons/svg/404.svg'
 
 export default defineComponent({
   name: 'SidebarItem',
@@ -63,12 +70,32 @@ export default defineComponent({
       default: ''
     }
   },
-  methods: {
+  computed: {
+    theOnlyOneChild() {
+      if (this.showingChildNumber() > 1) {
+        return null
+      }
+      if (this.item.children) {
+        for (const child of this.item.children) {
+          if (!child.meta || !child.meta.hidden) {
+            return child
+          }
+        }
+      }
+      // If there is no children, return itself with path removed,
+      // because this.basePath already conatins item's path information
+      return { ...this.item, path: '' }
+    },
     alwaysShowRootMenu() {
       if (this.item.meta && this.item.meta.alwaysShow) {
         return true
       }
       return false
+    }
+  },
+  methods: {
+    mapIcon(icon: string) {
+      return mapperToIcon[icon] ?? NotFound
     },
 
     showingChildNumber() {
@@ -85,22 +112,6 @@ export default defineComponent({
       return 0
     },
 
-    theOnlyOneChild() {
-      if (this.showingChildNumber() > 1) {
-        return null
-      }
-      if (this.item.children) {
-        for (const child of this.item.children) {
-          if (!child.meta || !child.meta.hidden) {
-            return child
-          }
-        }
-      }
-      // If there is no children, return itself with path removed,
-      // because this.basePath already conatins item's path information
-      return { ...this.item, path: '' }
-    },
-
     resolvePath(routePath: string) {
       if (isExternal(routePath)) {
         return routePath
@@ -115,13 +126,16 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.el-submenu.is-active > .el-submenu__title {
-  color: $subMenuActiveText !important;
-}
+// .el-submenu.is-active > .el-submenu__title
+// .el-menu-item.is-active {
+//  color: $subMenuActiveText !important;
+//}
 
 .full-mode {
-  .nest-menu .el-submenu > .el-submenu__title,
-  .el-submenu .el-menu-item {
+  // .nest-menu .el-submenu > .el-submenu__title,
+  .nest-menu .el-menu-item,
+  // .el-submenu .el-menu-item,
+  .el-menu-item {
     min-width: $sideBarWidth !important;
     background-color: $subMenuBg !important;
 
