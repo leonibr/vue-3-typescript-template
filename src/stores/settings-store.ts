@@ -1,4 +1,3 @@
-import elementVariables from '@/styles/element-variables.scss?inline'
 import defaultSettings from '@/settings'
 import { defineStore } from 'pinia'
 
@@ -19,7 +18,7 @@ export interface SettingsPayLoad {
 export const useSettingsStore = defineStore('settingsStore', {
   state: () =>
     <SettingsState>{
-      theme: elementVariables,
+      theme: '#1890ff',
       fixedHeader: defaultSettings.fixedHeader,
       showSettings: defaultSettings.showSettings,
       showTagsView: defaultSettings.showTagsView,

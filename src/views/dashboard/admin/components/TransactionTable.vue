@@ -1,17 +1,17 @@
 <template>
   <el-table :data="list" style="width: 100%; padding-top: 15px">
     <el-table-column label="OrderID" min-width="200">
-      <template v-slot="{ row }">
-        {{ orderNoFilter(row.orderId) }}
+      <template #default="scope">
+        {{ orderNoFilter(scope.row.orderId) }}
       </template>
     </el-table-column>
     <el-table-column label="Price" width="195" align="center">
-      <template v-slot="{ row }"> ¥{{ toThousandFilter(row.price) }} </template>
+      <template #default="scope">¥{{ toThousandFilter(scope.row.price) }} </template>
     </el-table-column>
     <el-table-column label="Status" width="100" align="center">
-      <template v-slot="{ row }">
-        <el-tag :type="transactionStatusFilter(row.status)">
-          {{ row.status }}
+      <template #default="scope">
+        <el-tag :type="transactionStatusFilter(scope.row.status)">
+          {{ scope.row.status }}
         </el-tag>
       </template>
     </el-table-column>
@@ -21,7 +21,7 @@
 <script lang="ts">
 import { getTransactions } from '@/api/transactions'
 import { type ITransactionData } from '@/api/types'
-import { defineComponent, reactive } from 'vue'
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
   name: 'TransactionTable',
@@ -29,7 +29,7 @@ export default defineComponent({
     this.fetchData()
   },
   setup() {
-    const list = reactive<ITransactionData[]>([])
+    const list = ref<ITransactionData[]>([])
     return { list }
   },
   methods: {
@@ -50,7 +50,7 @@ export default defineComponent({
     async fetchData() {
       const { data } = await getTransactions({
         /* Your params here */
-      })
+      })    
       this.list = data.items.slice(0, 8)
     }
   }

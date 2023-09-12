@@ -7,7 +7,10 @@
         :style="{ top: buttonTop + 'px', 'background-color': theme }"
         @click="show = !show"
       >
-        <i :class="show ? 'el-icon-close' : 'el-icon-setting'" />
+        <el-icon>
+          <setting v-if="!show" />
+          <close v-if="show" />
+        </el-icon>
       </div>
       <div class="rightPanel-items">
         <slot />
@@ -20,12 +23,14 @@
 import { addClass, removeClass } from '@/utils'
 import { defineComponent, ref, watch, onMounted, onBeforeUnmount } from 'vue'
 import { useSettingsStore } from '@/stores/settings-store'
+import { Close, Setting } from '@element-plus/icons-vue'
 
-//   @Component({
-//     name: 'RightPanel'
-//   })
 export default defineComponent({
   name: 'RightPanel',
+  components: {
+    Close,
+    Setting
+  },
   props: {
     clickNotClose: {
       type: Boolean,
