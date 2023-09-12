@@ -167,7 +167,10 @@ export default defineComponent({
     }
   }
 }
-
+.svg-icon {
+  width: 48px;
+  height: 48px;
+}
 @media (max-width: 550px) {
   .card-panel-description {
     display: none;

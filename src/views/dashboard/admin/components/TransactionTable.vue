@@ -21,7 +21,7 @@
 <script lang="ts">
 import { getTransactions } from '@/api/transactions'
 import { type ITransactionData } from '@/api/types'
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref } from 'vue'
 
 export default defineComponent({
   name: 'TransactionTable',
@@ -50,9 +50,15 @@ export default defineComponent({
     async fetchData() {
       const { data } = await getTransactions({
         /* Your params here */
-      })    
+      })
       this.list = data.items.slice(0, 8)
     }
   }
 })
 </script>
+
+<style scoped>
+.el-table--default .el-table__cell {
+  padding: 12px 0;
+}
+</style>
