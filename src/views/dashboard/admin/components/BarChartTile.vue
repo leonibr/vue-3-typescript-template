@@ -4,14 +4,13 @@
 
 <script lang="ts">
 import * as echarts from 'echarts'
-
 import ResizeMixin from '@/components/Charts/mixins/resize'
 import { defineComponent } from 'vue'
 
 const animationDuration = 6000
 
 export default defineComponent({
-  name: 'BarChart',
+  name: 'BarChartTile',
   mixins: [ResizeMixin],
   props: {
     className: {
@@ -27,8 +26,14 @@ export default defineComponent({
       default: '300px'
     }
   },
+  created() {
+    console.log({ name: 'BarChart-created', container: this.$el })
+  },
   mounted() {
+    console.log({ name: 'BarChart-mounted', container: this.$el })
+
     this.$nextTick(() => {
+      console.log({ name: 'BarChart-mounted=tick', container: this.$el })
       this.initChart()
     })
   },
@@ -41,6 +46,7 @@ export default defineComponent({
   },
   methods: {
     initChart() {
+      console.log({ name: 'BarChart-InitChart' })
       this.chart = echarts.init(this.$el as HTMLDivElement, 'macarons')
       this.chart.setOption({
         tooltip: {

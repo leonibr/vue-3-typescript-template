@@ -17,7 +17,7 @@ export default defineComponent({
     },
     id: {
       type: String,
-      default: 'chart'
+      default: 'bar-chart'
     },
     width: {
       type: String,

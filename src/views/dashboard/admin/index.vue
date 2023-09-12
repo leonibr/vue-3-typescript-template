@@ -21,7 +21,7 @@
       </el-col>
       <el-col :xs="24" :sm="24" :lg="8">
         <div class="chart-wrapper">
-          <bar-chart />
+          <bar-chart-tile />
         </div>
       </el-col>
     </el-row>
@@ -64,7 +64,7 @@
 <script lang="ts">
 import 'echarts/theme/macarons.js' // Theme used in BarChart, LineChart, PieChart and RadarChart
 import GithubCorner from '@/components/GithubCorner/index.vue'
-import BarChart from './components/BarChart.vue'
+import BarChartTile from './components/BarChartTile.vue'
 import BoxCard from './components/BoxCard.vue'
 import PanelGroup from './components/PanelGroup.vue'
 import PieChart from './components/PieChart.vue'
@@ -79,7 +79,7 @@ export default defineComponent({
   components: {
     GithubCorner,
     PanelGroup,
-    BarChart,
+    BarChartTile,
     LineChart,
     BoxCard,
     PieChart,
