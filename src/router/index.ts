@@ -4,7 +4,7 @@ import chartsRouter from '@/router/modules/charts'
 import nestedRouter from '@/router/modules/nested'
 import tableRouter from '@/router/modules/table'
 import componentsRouter from '@/router/modules/components'
-import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHistory, type RouteRecord, type RouteRecordRaw } from 'vue-router'
 
 /*
   Note: sub-menu only appear when children.length>=1
@@ -82,66 +82,49 @@ export const constantRoutes: RouteRecordRaw[] = [
         }
       }
     ]
+  },
+  {
+    path: '/guide',
+    component: LayOut,
+    redirect: '/guide/index',
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/guide/index.vue'),
+        name: 'Guide',
+        meta: {
+          title: 'guide',
+          icon: 'guide',
+          noCache: true
+        }
+      }
+    ]
+  },
+  {
+    path: '/profile',
+    component: LayOut,
+    redirect: '/profile/index',
+    meta: { hidden: true },
+    children: [
+      {
+        path: 'index',
+        component: () => import('@/views/profile/index.vue'),
+        name: 'Profile',
+        meta: {
+          title: 'profile',
+          icon: 'user',
+          noCache: true
+        }
+      }
+    ]
   }
-  // {
-  //   path: '/guide',
-  //   component: LayOut,
-  //   redirect: '/guide/index',
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/guide/index.vue'),
-  //       name: 'Guide',
-  //       meta: {
-  //         title: 'guide',
-  //         icon: 'guide',
-  //         noCache: true
-  //       }
-  //     }
-  //   ]
-  // },
-  // {
-  //   path: '/profile',
-  //   component: LayOut,
-  //   redirect: '/profile/index',
-  //   meta: { hidden: true },
-  //   children: [
-  //     {
-  //       path: 'index',
-  //       component: () => import('@/views/profile/index.vue'),
-  //       name: 'Profile',
-  //       meta: {
-  //         title: 'profile',
-  //         icon: 'user',
-  //         noCache: true
-  //       }
-  //     }
-  //   ]
-  // }
 ]
 
 /**
  * asyncRoutes
  * the routes that need to be dynamically loaded based on user roles
  */
-export const asyncRoutes: RouteRecordRaw[] = [
-  {
-    path: '/theme',
-    component: LayOut,
-    redirect: 'noredirect',
-    children: [
-      {
-        path: 'index',
-        component: () => import('@/views/theme/index.vue'),
-        name: 'Theme',
-        meta: {
-          title: 'theme',
-          icon: 'theme'
-        }
-      }
-    ]
-  }
-] || [
+export const asyncRoutes: (RouteRecord | RouteRecordRaw)[] = [
   // {
   //   path: '/permission',
   //   component: LayOut,
@@ -427,14 +410,14 @@ export const asyncRoutes: RouteRecordRaw[] = [
   //   ]
   // },
   {
-    path: 'https://github.com/Armour/vue-typescript-admin-template',
+    path: '/redirect/https://github.com/Armour/vue-typescript-admin-template',
     meta: {
       title: 'externalLink',
       icon: 'link'
     }
   } as unknown as RouteRecordRaw,
   {
-    path: '*',
+    path: '/:pathMatch(.*)*',
     redirect: '/404',
     meta: { hidden: true }
   }

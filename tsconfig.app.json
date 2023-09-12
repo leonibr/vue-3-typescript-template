@@ -8,7 +8,7 @@
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true,
     "baseUrl": ".",
-    "types": ["node"],
+    "types": ["node", "element-plus/global"],
     "paths": {
       "@/*": ["./src/*"]
     }

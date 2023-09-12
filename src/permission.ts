@@ -3,13 +3,12 @@ import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import i18n from '@/lang' // Internationalization
 import settings from './settings'
-import { type RouteLocationNormalized } from 'vue-router';
+import { type RouteLocationNormalized } from 'vue-router'
 import { useUserStore } from './stores/user-store'
 import { usePermissionStore } from './stores/permission'
-import { ElMessage } from 'element-plus';
+import { ElMessage } from 'element-plus'
 
 NProgress.configure({ showSpinner: false })
-
 
 const whiteList = ['/login', '/auth-redirect']
 
@@ -22,9 +21,9 @@ const getPageTitle = (key: string) => {
   return `${settings.title}`
 }
 
-router.beforeEach(async(to: RouteLocationNormalized, _: RouteLocationNormalized, next: any) => {
-    const userStore = useUserStore()
-    const permissionStore = usePermissionStore()
+router.beforeEach(async (to: RouteLocationNormalized, _: RouteLocationNormalized, next: any) => {
+  const userStore = useUserStore()
+  const permissionStore = usePermissionStore()
   // Start progress bar
   NProgress.start()
 
@@ -44,7 +43,7 @@ router.beforeEach(async(to: RouteLocationNormalized, _: RouteLocationNormalized,
           // Generate accessible routes map based on role
           permissionStore.generateRoutes(roles)
           // Dynamically add accessible routes
-          permissionStore.dynamicRoutes.forEach(route => {
+          permissionStore.dynamicRoutes.forEach((route) => {
             router.addRoute(route)
           })
           // Hack: ensure addRoutes is complete
@@ -54,6 +53,7 @@ router.beforeEach(async(to: RouteLocationNormalized, _: RouteLocationNormalized,
           // Remove token and redirect to login page
           userStore.resetToken()
           ElMessage.error(err || 'Has Error')
+          console.error({ err })
           next(`/login?redirect=${to.path}`)
           NProgress.done()
         }

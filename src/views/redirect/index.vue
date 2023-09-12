@@ -12,6 +12,9 @@ export default defineComponent({
 
     const router = useRouter()
     router.replace({ path: '/' + path, query }).catch((err) => console.warn({ redirect: err }))
+  },
+  render() {
+    return null
   }
 })
 </script>
