@@ -5,7 +5,7 @@
 <script lang="ts">
 import ResizeMixin from '@/components/Charts/mixins/resize'
 import * as echarts from 'echarts'
-import { type PropType, defineComponent, watch, reactive } from 'vue'
+import { type PropType, defineComponent, watch, reactive, ref } from 'vue'
 
 export interface ILineChartData {
   expectedData: number[]
@@ -13,7 +13,7 @@ export interface ILineChartData {
 }
 
 export default defineComponent({
-  name: 'LineChart',
+  name: 'LineChartDash',
   mixins: [ResizeMixin],
   props: {
     chartData: {
@@ -30,21 +30,13 @@ export default defineComponent({
       default: '350px'
     }
   },
-  setup(props) {
-    return {
-      vmChartData: reactive(props.chartData)
-    }
-  },
   mounted() {
-    watch(this.vmChartData, this.onChartDataChange, { deep: true })
+    watch(() => this.$props.chartData, this.setOptions)
     this.$nextTick(() => {
-      this.initChart()
+      this.initChart(this.$props.chartData)
     })
   },
   methods: {
-    onChartDataChange(value: ILineChartData) {
-      this.setOptions(value)
-    },
     setOptions(chartData: ILineChartData) {
       if (this.chart) {
         this.chart.setOption({
@@ -115,9 +107,9 @@ export default defineComponent({
         })
       }
     },
-    initChart() {
+    initChart(chartData: ILineChartData) {
       this.chart = echarts.init(this.$el as HTMLDivElement, 'macarons')
-      this.setOptions(this.chartData)
+      this.setOptions(chartData)
     }
   },
   beforeUnmount() {
