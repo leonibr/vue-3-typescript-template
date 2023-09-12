@@ -4,7 +4,6 @@ import { defineComponent } from 'vue'
 export default defineComponent({
   name: 'ResizeMixin',
   setup() {
-    console.log('{mixine} ')
     let chart!: ECharts | null
     let sidebarElm!: Element | null
     return {

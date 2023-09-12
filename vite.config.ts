@@ -11,7 +11,6 @@ import svgicon from 'vite-plugin-svgicon'
 // use administrator privileges to execute the command line.
 // For example, on Mac: sudo npm run / sudo yarn
 const env = loadEnv(process.env.NODE_ENV!, process.cwd(), '')
-console.log({ NODE_ENV: env.VITE_VUE_APP_BASE_API })
 const devServerPort = 9527 // TODO: get this variable from setting.ts
 const mockServerPort = 9528 // TODO: get this variable from setting.ts
 // const name = 'Vue Typescript Admin' // TODO: get this variable from setting.ts
