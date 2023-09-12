@@ -137,6 +137,7 @@ import { DeviceType, useAppStore } from '@/stores/app-store'
 import { defineComponent } from 'vue'
 import ResizeMixin from '@/layout/mixins/resize-mixin'
 import RightPanel from '@/components/RightPanel/index.vue'
+import Settings from '@/layout/components/Settings.vue'
 
 export default defineComponent({
   name: 'LayOut',
@@ -145,7 +146,8 @@ export default defineComponent({
     NavBar,
     SideBar,
     RightPanel,
-    TagsView
+    TagsView,
+    Settings
   },
   mixins: [ResizeMixin],
   setup() {
