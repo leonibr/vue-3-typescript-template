@@ -15,7 +15,6 @@ import { useRoute } from 'vue-router'
 export default defineComponent({
   name: 'ResizeMixin',
   data() {
-    console.log('create was triggered')
     const WIDTH = 992 // refer to Bootstrap's responsive design
     const appStore = useAppStore()
 

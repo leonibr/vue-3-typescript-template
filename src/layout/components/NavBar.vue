@@ -1,29 +1,26 @@
 <template>
   <div class="navbar">
-    <hamburger-component
-      id="hamburger-container"
-      :is-active="sidebar.opened"
-      class="hamburger-container"
-      @toggle-click="toggleSideBar"
-    />
+    <hamburger-component id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container"
+      @toggle-click="toggleSideBar" />
     <bread-crumb id="breadcrumb-container" class="breadcrumb-container" />
     <div class="right-menu">
       <template v-if="device !== 'mobile'">
         <header-search class="right-menu-item" />
         <error-log class="errLog-container right-menu-item hover-effect" />
-        <screen-full class="right-menu-item hover-effect" />
-        <el-tooltip :content="$t('navbar.size')" effect="dark" placement="bottom">
-          <size-select class="right-menu-item hover-effect" />
+        <screen-full class="right-menu-item hover-effect" /> <el-tooltip :content="$t('navbar.size')" effect="dark"
+          placement="bottom"> <size-select class="right-menu-item hover-effect" />
         </el-tooltip>
         <lang-select class="right-menu-item hover-effect" />
       </template>
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar + '?imageView2/1/w/80/h/80'" class="user-avatar" />
-          <i class="el-icon-caret-bottom" />
+          <el-icon :size="12">
+            <caret-bottom />
+          </el-icon>
         </div>
-        <el-dropdown-menu>
-          <template v-slot:dropdown>
+        <template v-slot:dropdown>
+          <el-dropdown-menu>
             <router-link to="/profile/">
               <el-dropdown-item>
                 {{ $t('navbar.profile') }}
@@ -47,8 +44,8 @@
                 {{ $t('navbar.logOut') }}
               </span>
             </el-dropdown-item>
-          </template>
-        </el-dropdown-menu>
+          </el-dropdown-menu>
+        </template>
       </el-dropdown>
     </div>
   </div>
@@ -65,6 +62,7 @@ import SizeSelect from '@/components/SizeSelect/index.vue'
 import { defineComponent } from 'vue'
 import { useAppStore } from '@/stores/app-store'
 import { useUserStore } from '@/stores/user-store'
+import { CaretBottom }  from '@element-plus/icons-vue'
 
 export default defineComponent({
   name: 'NavBar',
@@ -75,9 +73,10 @@ export default defineComponent({
     HeaderSearch,
     LangSelect,
     ScreenFull,
-    SizeSelect
+    SizeSelect,
+    CaretBottom
   },
-  data() {
+  setup() {
     const appStore = useAppStore()
     const userStore = useUserStore()
     return {
@@ -92,13 +91,13 @@ export default defineComponent({
 
     device() {
       return this.appStore.device.toString()
-    }
-  },
-  methods: {
+    },
     avatar() {
       return this.userStore.avatar
       //      return UserModule.avatar
     },
+  },
+  methods: {
 
     toggleSideBar() {
       const appStore = useAppStore()
@@ -197,6 +196,7 @@ export default defineComponent({
         }
       }
     }
+
   }
 }
 </style>

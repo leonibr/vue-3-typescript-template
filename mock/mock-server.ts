@@ -26,9 +26,6 @@ app.use(
     extended: false
   })
 )
-app.use( ( req, res, next ) => {
-  setTimeout(next, Math.floor( ( Math.random() * 2000 ) + 800 ) );
-});
 
 // No cache
 app.use((req, res, next) => {
