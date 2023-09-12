@@ -108,9 +108,7 @@ export default defineComponent({
       if (isExternal(this.basePath)) {
         return this.basePath
       }
-      const pathResponse = path.resolve(this.basePath, routePath)
-      console.log({pathResponse})
-      return pathResponse
+      return path.resolve(this.basePath, routePath)
     }
   }
 })
