@@ -47,7 +47,7 @@
 <script lang="ts">
 import path from 'path-browserify'
 import { useTagsViewStore, type ITagView } from '@/stores/tags-view-store'
-import { defineComponent, reactive, ref } from 'vue'
+import { defineComponent, reactive, watch } from 'vue'
 import ScrollPane from './ScrollPane.vue'
 import { useRoute, type RouteRecordRaw } from 'vue-router'
 import { usePermissionStore } from '@/stores/permission'
@@ -83,6 +83,8 @@ export default defineComponent({
     }
   },
   mounted() {
+    watch(reactive(this.route), this.onRouteChange)
+    watch(() => this.state.visible, this.onVisibleChange)
     this.initTags()
     this.addTags()
   },
@@ -95,6 +97,18 @@ export default defineComponent({
     }
   },
   methods: {
+    onRouteChange() {
+      this.addTags()
+      this.moveToCurrentTag()
+    },
+    onVisibleChange(value: boolean) {
+      console.log({ visibleChangedTo: value })
+      if (value) {
+        document.body.addEventListener('click', this.closeMenu)
+      } else {
+        document.body.removeEventListener('click', this.closeMenu)
+      }
+    },
     isActive(route: ITagView) {
       return route.path === this.$route.path
     },
@@ -136,7 +150,7 @@ export default defineComponent({
     },
 
     addTags() {
-      const route = useRoute()
+      const route = this.route
       const { name } = route
       if (name) {
         this.tagsStore.addView(route as unknown as ITagView)

@@ -11,7 +11,7 @@
 
 <script lang="ts">
 import type { ElScrollbar } from 'element-plus'
-import { onMounted, defineComponent, ref, getCurrentInstance } from 'vue'
+import { onMounted, defineComponent, ref } from 'vue'
 
 const tagSpacing = 4
 
@@ -49,8 +49,8 @@ export default defineComponent({
       const container = this.scrollContainer as unknown as HTMLElement
       const containerWidth = container.offsetWidth
       const scrollWrapper = this.scrollWrapper
-      const instance = getCurrentInstance()!
-      const tagList = instance.parent!.proxy!.tag as unknown as any[]
+
+      const tagList = this.$parent?.$refs.tag as unknown as HTMLElement[]
 
       let firstTag = null
       let lastTag = null
