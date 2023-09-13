@@ -13,11 +13,10 @@
             v-if="theOnlyOneChild!.meta!.icon"
             :data="mapIcon(theOnlyOneChild!.meta!.icon as string)"
           />
-          <template #title>
-            <span v-if="theOnlyOneChild!.meta!.title">{{
-              $t('route.' + theOnlyOneChild!.meta!.title)
-            }}</span>
-          </template>
+
+          <span v-if="theOnlyOneChild!.meta!.title">{{
+            $t('route.' + theOnlyOneChild!.meta!.title)
+          }}</span>
         </el-menu-item>
       </sidebar-item-link>
     </template>
@@ -134,14 +133,18 @@ export default defineComponent({
 .full-mode {
   // .nest-menu .el-submenu > .el-submenu__title,
   .nest-menu .el-menu-item,
-  // .el-submenu .el-menu-item,
-  .el-menu-item {
+  .full-mode.nest-menu .el-sub-menu .el-sub-menu__title,
+  .el-sub-menu {
     min-width: $sideBarWidth !important;
     background-color: $subMenuBg !important;
 
     &:hover {
       background-color: $subMenuHover !important;
     }
+  }
+
+  .el-sub-menu__title:hover {
+    background-color: var(--el-menu-hover-bg-color) !important;
   }
 }
 
