@@ -57,8 +57,8 @@ export default defineComponent({
 })
 </script>
 
-<style scoped>
-.el-table--default .el-table__cell {
+<style scoped lang="scss">
+.el-table--default :deep(.el-table__cell) {
   padding: 12px 0;
 }
 </style>
