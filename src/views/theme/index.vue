@@ -28,13 +28,12 @@
     </div>
 
     <div class="block">
-      <el-button type="primary" icon="el-icon-edit" />
-      <el-button type="primary" icon="el-icon-share" />
-      <el-button type="primary" icon="el-icon-delete" />
-      <el-button type="primary" icon="el-icon-search"> Search </el-button>
+      <el-button type="primary" :icon="svg.Edit" />
+      <el-button type="primary" :icon="svg.Share" />
+      <el-button type="primary" :icon="svg.Delete" />
+      <el-button type="primary" :icon="svg.Search">Search</el-button>
       <el-button type="primary">
-        Upload
-        <i class="el-icon-upload el-icon-right" />
+        Upload<el-icon class="el-icon--right"><upload /></el-icon>
       </el-button>
     </div>
 
@@ -62,10 +61,14 @@
 import { toggleClass } from '@/utils'
 import '@/assets/custom-theme/index.css' // the theme changed version element-ui css
 import { defineComponent, ref, reactive, watch } from 'vue'
+import { Share, Delete, Search, Edit, Upload } from '@element-plus/icons-vue'
 
 export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Theme',
+  components: {
+    Upload
+  },
   setup() {
     const theme = ref(false)
     const radio = ref(3)
@@ -83,7 +86,13 @@ export default defineComponent({
       theme,
       tags,
       radio,
-      slideValue
+      slideValue,
+      svg: {
+        Edit,
+        Share,
+        Delete,
+        Search
+      }
     }
   },
   mounted() {
