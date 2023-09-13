@@ -20,7 +20,7 @@
         </el-menu-item>
       </sidebar-item-link>
     </template>
-    <el-sub-menu v-else :index="resolvePath(item.path)" popper-append-to-body>
+    <el-sub-menu v-else :index="resolvePath(item.path)" teleported>
       <template #title>
         <icon v-if="item.meta && item.meta.icon" :data="mapIcon(item.meta.icon as string)" />
         <span v-if="item.meta && item.meta.title">{{ $t('route.' + item.meta.title) }}</span>
