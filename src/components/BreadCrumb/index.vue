@@ -31,7 +31,6 @@ export default defineComponent({
     watch(
       () => this.$route,
       (route) => {
-        console.log({ newRoute: route })
         if (route.path.startsWith('/redirect/')) return
         this.getBreadcrumb()
       }

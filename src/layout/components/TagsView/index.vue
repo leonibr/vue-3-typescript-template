@@ -102,7 +102,6 @@ export default defineComponent({
       this.moveToCurrentTag()
     },
     onVisibleChange(value: boolean) {
-      console.log({ visibleChangedTo: value })
       if (value) {
         document.body.addEventListener('click', this.closeMenu)
       } else {
