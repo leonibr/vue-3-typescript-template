@@ -5,6 +5,7 @@ import nestedRouter from '@/router/modules/nested'
 import tableRouter from '@/router/modules/table'
 import componentsRouter from '@/router/modules/components'
 import { createRouter, createWebHistory, type RouteRecord, type RouteRecordRaw } from 'vue-router'
+import { markRaw } from 'vue'
 
 /*
   Note: sub-menu only appear when children.length>=1
@@ -364,7 +365,7 @@ export const asyncRoutes: (RouteRecord | RouteRecordRaw)[] = [
   },
   {
     path: '/theme',
-    component: LayOut,
+    component: markRaw(LayOut),
     redirect: 'noredirect',
     children: [
       {

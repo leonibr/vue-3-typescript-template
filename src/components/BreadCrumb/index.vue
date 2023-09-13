@@ -5,9 +5,9 @@
         <span
           v-if="item.redirect === 'noredirect' || index === breadcrumbs.length - 1"
           class="no-redirect"
-          >{{ $t('route.' + item.meta!.title) }}</span
+          >{{ $t('route.' + item.meta?.title) }}</span
         >
-        <a v-else @click.prevent="handleLink(item)">{{ $t('route.' + item.meta!.title) }}</a>
+        <a v-else @click.prevent="handleLink(item)">{{ $t('route.' + item.meta?.title) }}</a>
       </el-breadcrumb-item>
     </transition-group>
   </el-breadcrumb>
@@ -16,23 +16,26 @@
 <script lang="ts">
 import { compile } from 'path-to-regexp'
 import { type RouteRecordRaw, type RouteLocationMatched } from 'vue-router'
-import { defineComponent, ref, watch } from 'vue'
+import { defineComponent, watch, reactive, ref } from 'vue'
 
 export default defineComponent({
   name: 'BreadCrumb',
   setup() {
-    const breadcrumbs: RouteRecordRaw[] = []
+    const breadcrumbs = ref<RouteRecordRaw[]>([])
 
     return {
       breadcrumbs
     }
   },
   created() {
-    const isPathOk = ref(this.$route.path.startsWith('/redirect/'))
-    watch(isPathOk, (isTrue) => {
-      if (isTrue) return
-      this.getBreadcrumb()
-    })
+    watch(
+      () => this.$route,
+      (route) => {
+        console.log({ newRoute: route })
+        if (route.path.startsWith('/redirect/')) return
+        this.getBreadcrumb()
+      }
+    )
     this.getBreadcrumb()
   },
   methods: {
@@ -44,9 +47,11 @@ export default defineComponent({
           { path: '/dashboard', meta: { title: 'dashboard' } } as unknown as RouteLocationMatched
         ].concat(matched)
       }
-      this.breadcrumbs = matched.filter((item) => {
-        return item.meta && item.meta.title && item.meta.breadcrumb !== false
-      })
+      this.breadcrumbs = [
+        ...matched.filter((item) => {
+          return item.meta && item.meta.title && item.meta.breadcrumb !== false
+        })
+      ]
     },
 
     isDashboard(route: RouteRecordRaw) {
@@ -73,7 +78,7 @@ export default defineComponent({
         return
       }
       this.$router.push(this.pathCompile(path)).catch((err) => {
-        console.warn(err)
+        console.warn({ err })
       })
     }
   }

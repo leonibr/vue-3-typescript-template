@@ -87,7 +87,7 @@ export default defineComponent({
     }
   },
   mounted() {
-    watch(ref(this.theme), this.onThemeChange)
+    watch(() => this.theme, this.onThemeChange)
   },
   methods: {
     onThemeChange() {
