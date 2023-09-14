@@ -13,6 +13,7 @@ import { useAppStore } from './stores/app-store'
 import i18n from './lang'
 import globalErrorHandler from './utils/error-log'
 import 'element-plus/es/components/message/style/css'
+import 'element-plus/es/components/message-box/style/css'
 
 const pinia = createPinia()
 const app = createApp(App)
