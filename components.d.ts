@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    AvatarUpload: typeof import('./src/components/AvatarUpload/index.vue')['default']
     BarChart: typeof import('./src/components/Charts/BarChart.vue')['default']
     BreadCrumb: typeof import('./src/components/BreadCrumb/index.vue')['default']
     ElBadge: typeof import('element-plus/es')['ElBadge']
