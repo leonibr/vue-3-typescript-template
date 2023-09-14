@@ -8,8 +8,10 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     AvatarUpload: typeof import('./src/components/AvatarUpload/index.vue')['default']
+    BackToTop: typeof import('./src/components/BackToTop/index.vue')['default']
     BarChart: typeof import('./src/components/Charts/BarChart.vue')['default']
     BreadCrumb: typeof import('./src/components/BreadCrumb/index.vue')['default']
+    EditorImage: typeof import('./src/components/Tinymce/components/EditorImage.vue')['default']
     ElAlert: typeof import('element-plus/es')['ElAlert']
     ElBadge: typeof import('element-plus/es')['ElBadge']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
@@ -52,6 +54,7 @@ declare module 'vue' {
     ElTimelineItem: typeof import('element-plus/es')['ElTimelineItem']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     ElTree: typeof import('element-plus/es')['ElTree']
+    ElUpload: typeof import('element-plus/es')['ElUpload']
     ErrorLog: typeof import('./src/components/ErrorLog.vue')['default']
     GithubCorner: typeof import('./src/components/GithubCorner/index.vue')['default']
     Hamburger: typeof import('./src/components/Hamburger/index.vue')['default']
@@ -78,6 +81,7 @@ declare module 'vue' {
     TextHoverEffect: typeof import('./src/components/TextHoverEffect/index.vue')['default']
     ThemePicker: typeof import('./src/components/ThemePicker/index.vue')['default']
     TheWelcome: typeof import('./src/components/TheWelcome.vue')['default']
+    Tinymce: typeof import('./src/components/Tinymce/index.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
 }
