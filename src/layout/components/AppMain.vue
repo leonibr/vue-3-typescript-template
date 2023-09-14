@@ -19,7 +19,7 @@ export default defineComponent({
   setup() {
     const tagStore = useTagsViewStore()
     const route = useRoute()
-    const key = ref(`${route.path}?` + new Date())
+    const key = ref(`${route.path}`)
     const cachedViews = ref(tagStore.cachedViews as unknown as (string | RegExp)[])
     return {
       cachedViews,

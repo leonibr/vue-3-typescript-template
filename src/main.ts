@@ -1,13 +1,14 @@
 import 'normalize.css'
 import './styles/index.scss'
 import ElementPlus from 'element-plus'
-import { createApp } from 'vue'
+import { createApp, type Directive } from 'vue'
 import { createPinia } from 'pinia'
 import { VueSvgIconPlugin } from '@yzfe/vue3-svgicon'
 import '@yzfe/svgicon/lib/svgicon.css'
 import App from './App.vue'
 import router from '@/router'
 import '@/permission'
+import * as directives from '@/directives'
 import { useAppStore } from './stores/app-store'
 import i18n from './lang'
 import globalErrorHandler from './utils/error-log'
@@ -26,6 +27,10 @@ app.use(VueSvgIconPlugin, {
   tagName: 'icon',
   defaultWidth: '1em',
   defaultHeight: '1em'
+})
+
+Object.keys(directives).forEach((key) => {
+  app.directive(key, (directives as { [key: string]: Directive<any, any> })[key])
 })
 
 app.use(router)
