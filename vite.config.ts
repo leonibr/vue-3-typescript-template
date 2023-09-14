@@ -33,6 +33,7 @@ export default defineConfig({
     //   include: resolve(dirname(fileURLToPath(import.meta.url)), './src/lang/**')
     // })
   ],
+
   resolve: {
     alias: {
       // 'vue-i18n': 'vue-i18n/dist/vue-i18n.runtime.esm-bundler.js',

@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import ImageCropUpload from 'vue-image-crop-upload'
-import { defineComponent, reactive, ref, watch, nextTick } from 'vue'
+import { defineComponent, reactive, ref, watch } from 'vue'
 import { useAppStore } from '@/stores/app-store'
 
 export default defineComponent({

@@ -10,6 +10,7 @@ declare module 'vue' {
     AvatarUpload: typeof import('./src/components/AvatarUpload/index.vue')['default']
     BarChart: typeof import('./src/components/Charts/BarChart.vue')['default']
     BreadCrumb: typeof import('./src/components/BreadCrumb/index.vue')['default']
+    ElAlert: typeof import('element-plus/es')['ElAlert']
     ElBadge: typeof import('element-plus/es')['ElBadge']
     ElBreadcrumb: typeof import('element-plus/es')['ElBreadcrumb']
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
