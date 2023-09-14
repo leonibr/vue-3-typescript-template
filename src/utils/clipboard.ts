@@ -1,5 +1,5 @@
 import Clipboard from 'clipboard'
-import { ElMessage } from 'element-plus/lib/components/index.js'
+import { ElMessage } from 'element-plus'
 
 export const clipboardSuccess = () =>
   ElMessage({
