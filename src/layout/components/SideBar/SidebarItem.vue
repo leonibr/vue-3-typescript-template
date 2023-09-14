@@ -13,7 +13,6 @@
             v-if="theOnlyOneChild!.meta!.icon"
             :data="mapIcon(theOnlyOneChild!.meta!.icon as string)"
           />
-
           <span v-if="theOnlyOneChild!.meta!.title">{{
             $t('route.' + theOnlyOneChild!.meta!.title)
           }}</span>
@@ -41,13 +40,14 @@
 </template>
 
 <script lang="ts">
-import path from 'path-browserify'
+// import resolve from 'url-resolve-browser'
 import { type RouteRecordRaw } from 'vue-router'
 import { isExternal } from '@/utils/validate'
 import SidebarItemLink from './SidebarItemLink.vue'
-import { defineComponent, type PropType } from 'vue'
+import { defineComponent, type PropType, watch } from 'vue'
 import { mapperToIcon } from './mapper-icon'
 import NotFound from '@/icons/svg/404.svg'
+import path from 'path-browserify'
 
 export default defineComponent({
   name: 'SidebarItem',
@@ -68,6 +68,14 @@ export default defineComponent({
     basePath: {
       default: ''
     }
+  },
+  mounted() {
+    watch(
+      () => this.isCollapse,
+      () => {
+        if (!this.isFirstLevel) console.log({ isCollapse: this.isCollapse })
+      }
+    )
   },
   computed: {
     theOnlyOneChild() {

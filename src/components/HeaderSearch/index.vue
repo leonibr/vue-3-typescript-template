@@ -1,10 +1,23 @@
 <template>
   <div id="header-search" :class="{ show: show }" class="header-search">
     <icon class="search-icon" :data="searchSvg" @click.stop="click" />
-    <el-select ref="headerSearchSelect" v-model="search" :remote-method="querySearch" filterable default-first-option
-      remote placeholder="Search" class="header-search-select" @change="change">
-      <el-option v-for="item in options" :key="item.path" :value="item"
-        :label="(item.meta!.title as string[]).join(' > ')" />
+    <el-select
+      ref="headerSearchSelect"
+      v-model="search"
+      :remote-method="querySearch"
+      filterable
+      default-first-option
+      remote
+      placeholder="Search"
+      class="header-search-select"
+      @change="change"
+    >
+      <el-option
+        v-for="item in options"
+        :key="item.path"
+        :value="item"
+        :label="(item.meta!.title as string[]).join(' > ')"
+      />
     </el-select>
   </div>
 </template>

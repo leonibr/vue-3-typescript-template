@@ -159,12 +159,6 @@ export default defineComponent({
       settingsStore
     }
   },
-  data() {
-    const count = 0
-    return {
-      count
-    }
-  },
   computed: {
     classObj() {
       return {

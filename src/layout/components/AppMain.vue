@@ -1,11 +1,11 @@
 <template>
   <section class="app-main">
     <router-view v-slot="{ Component }">
-      <transition name="fade-transform" mode="out-in">
-        <keep-alive :include="cachedViews">
+      <keep-alive :include="cachedViews">
+        <transition name="fade-transform" mode="out-in">
           <component :is="Component" :key="key" />
-        </keep-alive>
-      </transition>
+        </transition>
+      </keep-alive>
     </router-view>
   </section>
 </template>
@@ -19,7 +19,7 @@ export default defineComponent({
   setup() {
     const tagStore = useTagsViewStore()
     const route = useRoute()
-    const key = ref(route.path)
+    const key = ref(`${route.path}?` + new Date())
     const cachedViews = ref(tagStore.cachedViews as unknown as (string | RegExp)[])
     return {
       cachedViews,
