@@ -67,6 +67,7 @@ declare module 'vue' {
     IconHamburger: typeof import('./src/components/icons/IconHamburger.vue')['default']
     IconSupport: typeof import('./src/components/icons/IconSupport.vue')['default']
     IconTooling: typeof import('./src/components/icons/IconTooling.vue')['default']
+    JsonEditor: typeof import('./src/components/JsonEditor/index.vue')['default']
     LangSelect: typeof import('./src/components/LangSelect/index.vue')['default']
     LineChart: typeof import('./src/components/Charts/LineChart.vue')['default']
     Mallki: typeof import('./src/components/TextHoverEffect/Mallki.vue')['default']
