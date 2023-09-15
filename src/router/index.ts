@@ -4,7 +4,12 @@ import chartsRouter from '@/router/modules/charts'
 import nestedRouter from '@/router/modules/nested'
 import tableRouter from '@/router/modules/table'
 import componentsRouter from '@/router/modules/components'
-import { createRouter, createWebHistory, type RouteRecord, type RouteRecordRaw } from 'vue-router'
+import {
+  createRouter,
+  createWebHashHistory,
+  type RouteRecord,
+  type RouteRecordRaw
+} from 'vue-router'
 import { markRaw } from 'vue'
 
 /*
@@ -431,13 +436,13 @@ const router = createRouter({
       return { x: 0, y: 0 } as ScrollToOptions
     }
   },
-  history: createWebHistory(import.meta.env.BASE_URL),
+  history: createWebHashHistory(import.meta.env.BASE_URL),
   routes: constantRoutes
 })
 
 // // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
 export function resetRouter() {
-  const newRouter = createRouter({ history: createWebHistory(''), routes: [] })
+  const newRouter = createRouter({ history: createWebHashHistory(''), routes: [] })
   ;(router as any).matcher = (newRouter as any).matcher // reset router
 }
 

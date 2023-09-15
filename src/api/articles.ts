@@ -1,5 +1,5 @@
 import request from '@/utils/request'
-import { type IArticleData } from './types'
+import { type IArticleData } from './types.d'
 
 export const defaultArticleData: IArticleData = {
   id: 0,
