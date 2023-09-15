@@ -4,7 +4,7 @@
     class="tinymce-container"
     :style="{ width: containerWidth }"
   >
-    <tinymce-editor :id="id" v-model="tinymceContent" :init="{}" />
+    <tinymce-editor :id="id" v-model="tinymceContent" :init="initOptions" />
     <div class="editor-custom-btn-container">
       <editor-image-upload
         :color="uploadButtonColor"
@@ -64,9 +64,9 @@ import 'tinymce/plugins/visualblocks'
 import 'tinymce/plugins/visualchars'
 import 'tinymce/plugins/wordcount'
 import TinymceEditor from '@tinymce/tinymce-vue' // TinyMCE vue wrapper
-import 'tinymce/skins/ui/oxide/skin.min.css'
-import 'tinymce/skins/ui/oxide/content.min.css'
-import 'tinymce/skins/content/default/content.css'
+//import 'tinymce/skins/ui/oxide/skin.min.css'
+// import 'tinymce/skins/ui/oxide/content.min.css'
+// import 'tinymce/skins/content/default/content.css'
 
 import EditorImageUpload from './components/EditorImage.vue'
 import { plugins, toolbar } from './config'
@@ -98,7 +98,7 @@ export default defineComponent({
       default: () => []
     },
     menubar: {
-      type: String,
+      type: [String, Array<string>],
       default: 'file edit insert view format table'
     },
     height: {
@@ -110,13 +110,13 @@ export default defineComponent({
       default: 'auto'
     }
   },
-  setup() {
+  setup(props) {
     const hasChange = ref(false)
     const hasInit = ref(false)
     const fullscreen = ref(false)
     const appStore = useAppStore()
     const settingsStore = useSettingsStore()
-    const tinymceContent = ref('')
+    const tinymceContent = ref(props.modelValue)
     // https://www.tiny.cloud/docs/configure/localization/#language
     // when adding a new language, please also add the corresponding lang file under public/tinymce/langs folder
     const languageTypeList = reactive<{ [key: string]: string }>({
@@ -166,6 +166,7 @@ export default defineComponent({
     initOptions() {
       return {
         selector: `#${this.id}`,
+        branding: false,
         height: this.height,
         body_class: 'panel-body',
         object_resizing: false,
@@ -174,10 +175,14 @@ export default defineComponent({
         plugins: plugins,
         language: this.language,
         language_url: this.language === 'en' ? '' : `/tinymce/langs/${this.language}.js`,
-        skin: false,
-        content_css: false,
-        // skin_url: '/tinymce/skins/', // `${import.meta.env.BASE_URL}tinymce/skins/`,
-        emoticons_database_url: 'tinymce/emojis.min.js',
+        skin_url: '/tinymce/skins/',
+        content_css: '/tinymce/skins/', // `${import.meta.env.BASE_URL}tinymce/skins/`,
+        // content_style: `body {
+        //   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+        // }`,
+        // skin_url: `${import.meta.env.BASE_URL}t/inymce/skins/`,
+        emoticons_database_url: '/tinymce/emojis.min.js',
         end_container_on_empty_block: true,
         powerpaste_word_import: 'clean',
         code_dialog_height: 450,
@@ -191,7 +196,7 @@ export default defineComponent({
         nonbreaking_force_tab: true,
         // https://www.tiny.cloud/docs-3x/reference/configuration/Configuration3x@convert_urls/
         // https://stackoverflow.com/questions/5196205/disable-tinymce-absolute-to-relative-url-conversions
-        convert_urls: false,
+        convert_urls: true,
         init_instance_callback: (editor: any) => {
           if (this.modelValue) {
             editor.setContent(this.modelValue)
