@@ -84,4 +84,7 @@ declare module 'vue' {
     Tinymce: typeof import('./src/components/Tinymce/index.vue')['default']
     WelcomeItem: typeof import('./src/components/WelcomeItem.vue')['default']
   }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
+  }
 }
