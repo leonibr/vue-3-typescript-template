@@ -131,7 +131,10 @@ export default defineComponent({
   },
   mounted() {
     // FIXES auto focus issue caused by MarkdownEditor
-    window.scrollTo(0, 0)
+    const timeOutHandle = setTimeout(() => {
+      clearTimeout(timeOutHandle)
+      window.scrollTo(0, 0)
+    }, 10)
   },
   computed: {
     language() {
