@@ -6,7 +6,7 @@ const { errorLog: needErrorLog } = settings
 
 const checkNeed = () => {
   const env = import.meta.env.PROD ? 'production' : 'not-production' // process.env.NODE_ENV
-  console.log({ env })
+
   if (isArray(needErrorLog) && env) {
     return needErrorLog.includes(env)
   }

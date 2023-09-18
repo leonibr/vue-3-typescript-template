@@ -66,7 +66,6 @@ export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Icons',
   setup() {
-    console.log({ svgs })
     return {
       svgIcons,
       elementIcons,

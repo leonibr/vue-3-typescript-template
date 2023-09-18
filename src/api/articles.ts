@@ -20,7 +20,7 @@ export const defaultArticleData: IArticleData = {
 }
 
 export const getArticles = (params: any) =>
-  request<{ items: IArticleData[] }>({
+  request<{ items: IArticleData[]; total: number }>({
     url: '/articles',
     method: 'get',
     params

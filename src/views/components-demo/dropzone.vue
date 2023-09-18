@@ -30,12 +30,10 @@ export default defineComponent({
   methods: {
     dropzoneSuccess(file: File, response: any) {
       ElMessage({ message: 'Upload success', type: 'success' })
-      console.log(file, response)
     },
 
     dropzoneRemovedFile(file: File, error: Error, xhr: XMLHttpRequest) {
       ElMessage({ message: 'Delete success', type: 'success' })
-      console.log({ file, error, xhr })
     }
   }
 })
