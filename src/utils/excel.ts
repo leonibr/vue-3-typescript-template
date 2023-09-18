@@ -1,5 +1,6 @@
 import { saveAs } from 'file-saver'
-import XLSX, { type WorkBook, type WorkSheet } from 'xlsx'
+import * as XLSX from 'xlsx'
+import { type WorkBook, type WorkSheet } from 'xlsx'
 
 interface ICell {
   v: Date | number | boolean | string
@@ -34,7 +35,7 @@ const generateArray = (table: HTMLElement) => {
       }
       const cellValue = cell.innerText
       // Skip ranges
-      ranges.forEach(function(range) {
+      ranges.forEach(function (range) {
         if (
           R >= range.s.r &&
           R <= range.e.r &&

@@ -100,23 +100,23 @@
         width="80"
         :class-name="getSortClass('id')"
       >
-        <template slot-scope="{ row }">
+        <template v-slot="{ row }">
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.date')" width="180px" align="center">
-        <template slot-scope="{ row }">
+        <template v-slot="{ row }">
           <span>{{ row.timestamp | parseTime }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.title')" min-width="150px">
-        <template slot-scope="{ row }">
+        <template v-slot="{ row }">
           <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
           <el-tag>{{ row.type | typeFilter }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.author')" width="180px" align="center">
-        <template slot-scope="{ row }">
+        <template v-slot="{ row }">
           <span>{{ row.author }}</span>
         </template>
       </el-table-column>
@@ -126,17 +126,17 @@
         width="110px"
         align="center"
       >
-        <template slot-scope="{ row }">
+        <template v-slot="{ row }">
           <span style="color: red">{{ row.reviewer }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.importance')" width="105px">
-        <template slot-scope="{ row }">
+        <template v-slot="{ row }">
           <svg-icon v-for="n in +row.importance" :key="n" name="star" class="meta-item__icon" />
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.readings')" align="center" width="95">
-        <template slot-scope="{ row }">
+        <template v-slot="{ row }">
           <span v-if="row.pageviews" class="link-type" @click="handleGetPageviews(row.pageviews)">{{
             row.pageviews
           }}</span>
@@ -144,7 +144,7 @@
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.status')" class-name="status-col" width="100">
-        <template slot-scope="{ row }">
+        <template v-slot="{ row }">
           <el-tag :type="row.status | articleStatusFilter">
             {{ row.status }}
           </el-tag>
@@ -156,7 +156,7 @@
         width="230"
         class-name="fixed-width"
       >
-        <template slot-scope="{ row, $index }">
+        <template v-slot="{ row, $index }">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             {{ $t('table.edit') }}
           </el-button>
@@ -190,12 +190,12 @@
     <pagination
       v-show="total > 0"
       :total="total"
-      :page.sync="listQuery.page"
-      :limit.sync="listQuery.limit"
+      v-model:page="listQuery.page"
+      v-model:limit="listQuery.limit"
       @pagination="getList"
     />
 
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
+    <el-dialog :title="textMap[dialogStatus]" v-model:visible="dialogFormVisible">
       <el-form
         ref="dataForm"
         :rules="rules"
@@ -260,7 +260,7 @@
       </div>
     </el-dialog>
 
-    <el-dialog :visible.sync="dialogPageviewsVisible" title="Reading statistics">
+    <el-dialog v-model:visible="dialogPageviewsVisible" title="Reading statistics">
       <el-table :data="pageviewsData" border fit highlight-current-row style="width: 100%">
         <el-table-column prop="key" label="Channel" />
         <el-table-column prop="pageviews" label="Pageviews" />
@@ -275,9 +275,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { Form } from 'element-ui'
-import { cloneDeep } from 'lodash'
+import { ElForm, ElMessage } from 'element-plus'
+import { cloneDeep } from 'lodash-es'
 import {
   getArticles,
   getPageviews,
@@ -285,12 +284,14 @@ import {
   updateArticle,
   defaultArticleData
 } from '@/api/articles'
-import { IArticleData } from '@/api/types'
+import { type IArticleData } from '@/api/types'
 import { exportJson2Excel } from '@/utils/excel'
 import { formatJson } from '@/utils'
 import Pagination from '@/components/Pagination/index.vue'
+import { ElNotification } from 'element-plus'
+import { defineComponent, ref } from 'vue'
 
-const calendarTypeOptions = [
+const calendarTypeOptionsSource = [
   { key: 'CN', displayName: 'China' },
   { key: 'US', displayName: 'USA' },
   { key: 'JP', displayName: 'Japan' },
@@ -298,12 +299,15 @@ const calendarTypeOptions = [
 ]
 
 // arr to obj, such as { CN : "China", US : "USA" }
-const calendarTypeKeyValue = calendarTypeOptions.reduce((acc: { [key: string]: string }, cur) => {
-  acc[cur.key] = cur.displayName
-  return acc
-}, {}) as { [key: string]: string }
+const calendarTypeKeyValue = calendarTypeOptionsSource.reduce(
+  (acc: { [key: string]: string }, cur) => {
+    acc[cur.key] = cur.displayName
+    return acc
+  },
+  {}
+) as { [key: string]: string }
 
-@Component({
+export default defineComponent({
   name: 'ComplexTable',
   components: {
     Pagination
@@ -312,183 +316,204 @@ const calendarTypeKeyValue = calendarTypeOptions.reduce((acc: { [key: string]: s
     typeFilter: (type: string) => {
       return calendarTypeKeyValue[type]
     }
-  }
-})
-export default class extends Vue {
-  private tableKey = 0
-  private list: IArticleData[] = []
-  private total = 0
-  private listLoading = true
-  private listQuery = {
-    page: 1,
-    limit: 20,
-    importance: undefined,
-    title: undefined,
-    type: undefined,
-    sort: '+id'
-  }
+  },
+  setup() {
+    const tableKey = ref(0)
+    const list = ref<IArticleData[]>([])
+    const total = ref(0)
+    const listLoading = ref(true)
+    const listQuery = ref({
+      page: 1,
+      limit: 20,
+      importance: undefined,
+      title: undefined,
+      type: undefined,
+      sort: '+id'
+    })
 
-  private importanceOptions = [1, 2, 3]
-  private calendarTypeOptions = calendarTypeOptions
-  private sortOptions = [
-    { label: 'ID Ascending', key: '+id' },
-    { label: 'ID Descending', key: '-id' }
-  ]
+    const importanceOptions = ref([1, 2, 3])
+    const calendarTypeOptions = ref(calendarTypeOptionsSource)
+    const sortOptions = ref([
+      { label: 'ID Ascending', key: '+id' },
+      { label: 'ID Descending', key: '-id' }
+    ])
 
-  private statusOptions = ['published', 'draft', 'deleted']
-  private showReviewer = false
-  private dialogFormVisible = false
-  private dialogStatus = ''
-  private textMap = {
-    update: 'Edit',
-    create: 'Create'
-  }
+    const statusOptions = ref(['published', 'draft', 'deleted'])
+    const showReviewer = ref(false)
+    const dialogFormVisible = ref(false)
+    const dialogStatus = ref('')
+    const textMap = ref({
+      update: 'Edit',
+      create: 'Create'
+    })
 
-  private dialogPageviewsVisible = false
-  private pageviewsData = []
-  private rules = {
-    type: [{ required: true, message: 'type is required', trigger: 'change' }],
-    timestamp: [{ required: true, message: 'timestamp is required', trigger: 'change' }],
-    title: [{ required: true, message: 'title is required', trigger: 'blur' }]
-  }
+    const dialogPageviewsVisible = ref(false)
+    const pageviewsData = ref([])
+    const rules = ref({
+      type: [{ required: true, message: 'type is required', trigger: 'change' }],
+      timestamp: [{ required: true, message: 'timestamp is required', trigger: 'change' }],
+      title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+    })
 
-  private downloadLoading = false
-  private tempArticleData = defaultArticleData
+    const downloadLoading = ref(false)
+    const tempArticleData = ref(defaultArticleData)
 
+    return {
+      tableKey,
+      list,
+      total,
+      listLoading,
+      listQuery,
+      dialogPageviewsVisible,
+      pageviewsData,
+      rules,
+      statusOptions,
+      textMap,
+      dialogStatus,
+      dialogFormVisible,
+      showReviewer,
+      sortOptions,
+      importanceOptions,
+      calendarTypeOptions,
+      downloadLoading,
+      tempArticleData
+    }
+  },
   created() {
     this.getList()
-  }
+  },
+  methods: {
+    async getList() {
+      this.listLoading = true
+      const { data } = await getArticles(this.listQuery)
+      this.list = data.items
+      this.total = data.total
+      // Just to simulate the time of the request
+      setTimeout(() => {
+        this.listLoading = false
+      }, 0.5 * 1000)
+    },
 
-  private async getList() {
-    this.listLoading = true
-    const { data } = await getArticles(this.listQuery)
-    this.list = data.items
-    this.total = data.total
-    // Just to simulate the time of the request
-    setTimeout(() => {
-      this.listLoading = false
-    }, 0.5 * 1000)
-  }
+    handleFilter() {
+      this.listQuery.page = 1
+      this.getList()
+    },
 
-  private handleFilter() {
-    this.listQuery.page = 1
-    this.getList()
-  }
+    handleModifyStatus(row: any, status: string) {
+      ElMessage({
+        message: '操作成功',
+        type: 'success'
+      })
+      row.status = status
+    },
 
-  private handleModifyStatus(row: any, status: string) {
-    this.$message({
-      message: '操作成功',
-      type: 'success'
-    })
-    row.status = status
-  }
+    sortChange(data: any) {
+      const { prop, order } = data
+      if (prop === 'id') {
+        this.sortByID(order)
+      }
+    },
 
-  private sortChange(data: any) {
-    const { prop, order } = data
-    if (prop === 'id') {
-      this.sortByID(order)
+    sortByID(order: string) {
+      if (order === 'ascending') {
+        this.listQuery.sort = '+id'
+      } else {
+        this.listQuery.sort = '-id'
+      }
+      this.handleFilter()
+    },
+
+    getSortClass(key: string) {
+      const sort = this.listQuery.sort
+      return sort === `+${key}` ? 'ascending' : 'descending'
+    },
+
+    resetTempArticleData() {
+      this.tempArticleData = cloneDeep(defaultArticleData)
+    },
+
+    handleCreate() {
+      this.resetTempArticleData()
+      this.dialogStatus = 'create'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        ;(this.$refs.dataForm as typeof ElForm).clearValidate()
+      })
+    },
+
+    createData() {
+      ;(this.$refs.dataForm as typeof ElForm).validate(async (valid) => {
+        if (valid) {
+          const articleData = this.tempArticleData
+          articleData.id = Math.round(Math.random() * 100) + 1024 // mock a id
+          articleData.author = 'vue-typescript-admin'
+          const { data } = await createArticle({ article: articleData })
+          data.article.timestamp = Date.parse(data.article.timestamp)
+          this.list.unshift(data.article)
+          this.dialogFormVisible = false
+          this.$notify({
+            title: '成功',
+            message: '创建成功',
+            type: 'success',
+            duration: 2000
+          })
+        }
+      })
+    },
+
+    handleUpdate(row: any) {
+      this.tempArticleData = Object.assign({}, row)
+      this.tempArticleData.timestamp = +new Date(this.tempArticleData.timestamp)
+      this.dialogStatus = 'update'
+      this.dialogFormVisible = true
+      this.$nextTick(() => {
+        ;(this.$refs.dataForm as typeof ElForm).clearValidate()
+      })
+    },
+
+    updateData() {
+      ;(this.$refs.dataForm as typeof ElForm).validate(async (valid: any) => {
+        if (valid) {
+          const tempData = Object.assign({}, this.tempArticleData)
+          tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
+          const { data } = await updateArticle(tempData.id, { article: tempData })
+          const index = this.list.findIndex((v) => v.id === data.article.id)
+          this.list.splice(index, 1, data.article)
+          this.dialogFormVisible = false
+          ElNotification({
+            title: '成功',
+            message: '更新成功',
+            type: 'success',
+            duration: 2000
+          })
+        }
+      })
+    },
+
+    handleDelete(row: any, index: number) {
+      ElNotification({
+        title: 'Success',
+        message: 'Delete Successfully',
+        type: 'success',
+        duration: 2000
+      })
+      this.list.splice(index, 1)
+    },
+
+    async handleGetPageviews(pageviews: string) {
+      const { data } = await getPageviews({ pageviews })
+      this.pageviewsData = data.pageviews
+      this.dialogPageviewsVisible = true
+    },
+
+    handleDownload() {
+      this.downloadLoading = true
+      const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
+      const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
+      const data = formatJson(filterVal, this.list)
+      exportJson2Excel(tHeader, data, 'table-list')
+      this.downloadLoading = false
     }
   }
-
-  private sortByID(order: string) {
-    if (order === 'ascending') {
-      this.listQuery.sort = '+id'
-    } else {
-      this.listQuery.sort = '-id'
-    }
-    this.handleFilter()
-  }
-
-  private getSortClass(key: string) {
-    const sort = this.listQuery.sort
-    return sort === `+${key}` ? 'ascending' : 'descending'
-  }
-
-  private resetTempArticleData() {
-    this.tempArticleData = cloneDeep(defaultArticleData)
-  }
-
-  private handleCreate() {
-    this.resetTempArticleData()
-    this.dialogStatus = 'create'
-    this.dialogFormVisible = true
-    this.$nextTick(() => {
-      ;(this.$refs.dataForm as Form).clearValidate()
-    })
-  }
-
-  private createData() {
-    ;(this.$refs.dataForm as Form).validate(async (valid) => {
-      if (valid) {
-        const articleData = this.tempArticleData
-        articleData.id = Math.round(Math.random() * 100) + 1024 // mock a id
-        articleData.author = 'vue-typescript-admin'
-        const { data } = await createArticle({ article: articleData })
-        data.article.timestamp = Date.parse(data.article.timestamp)
-        this.list.unshift(data.article)
-        this.dialogFormVisible = false
-        this.$notify({
-          title: '成功',
-          message: '创建成功',
-          type: 'success',
-          duration: 2000
-        })
-      }
-    })
-  }
-
-  private handleUpdate(row: any) {
-    this.tempArticleData = Object.assign({}, row)
-    this.tempArticleData.timestamp = +new Date(this.tempArticleData.timestamp)
-    this.dialogStatus = 'update'
-    this.dialogFormVisible = true
-    this.$nextTick(() => {
-      ;(this.$refs.dataForm as Form).clearValidate()
-    })
-  }
-
-  private updateData() {
-    ;(this.$refs.dataForm as Form).validate(async (valid) => {
-      if (valid) {
-        const tempData = Object.assign({}, this.tempArticleData)
-        tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-        const { data } = await updateArticle(tempData.id, { article: tempData })
-        const index = this.list.findIndex((v) => v.id === data.article.id)
-        this.list.splice(index, 1, data.article)
-        this.dialogFormVisible = false
-        this.$notify({
-          title: '成功',
-          message: '更新成功',
-          type: 'success',
-          duration: 2000
-        })
-      }
-    })
-  }
-
-  private handleDelete(row: any, index: number) {
-    this.$notify({
-      title: 'Success',
-      message: 'Delete Successfully',
-      type: 'success',
-      duration: 2000
-    })
-    this.list.splice(index, 1)
-  }
-
-  private async handleGetPageviews(pageviews: string) {
-    const { data } = await getPageviews({ pageviews })
-    this.pageviewsData = data.pageviews
-    this.dialogPageviewsVisible = true
-  }
-
-  private handleDownload() {
-    this.downloadLoading = true
-    const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-    const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
-    const data = formatJson(filterVal, this.list)
-    exportJson2Excel(tHeader, data, 'table-list')
-    this.downloadLoading = false
-  }
-}
+})
 </script>
