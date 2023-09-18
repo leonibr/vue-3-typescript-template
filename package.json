@@ -17,6 +17,7 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
     "@tinymce/tinymce-vue": "^5.1.1",
+    "@toast-ui/editor": "^3.2.2",
     "@yzfe/svgicon": "^1.1.0",
     "@yzfe/vue3-svgicon": "^1.0.1",
     "axios": "^1.5.0",
