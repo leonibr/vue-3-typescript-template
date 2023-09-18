@@ -12,6 +12,8 @@ declare module 'vue' {
     BarChart: typeof import('./src/components/Charts/BarChart.vue')['default']
     BreadCrumb: typeof import('./src/components/BreadCrumb/index.vue')['default']
     DraggableKanban: typeof import('./src/components/DraggableKanban/index.vue')['default']
+    DraggableList: typeof import('./src/components/DraggableList/index.vue')['default']
+    DraggableSelect: typeof import('./src/components/DraggableSelect/index.vue')['default']
     EditorImage: typeof import('./src/components/Tinymce/components/EditorImage.vue')['default']
     ElAlert: typeof import('element-plus/es')['ElAlert']
     ElBadge: typeof import('element-plus/es')['ElBadge']
