@@ -44,6 +44,7 @@
     "vue-i18n": "9",
     "vue-image-crop-upload": "^3.0.3",
     "vue-router": "^4.2.4",
+    "vue2-dropzone-vue3": "^1.1.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
