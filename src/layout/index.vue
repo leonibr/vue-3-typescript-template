@@ -134,7 +134,7 @@ import NavBar from './components/NavBar.vue'
 import SideBar from '@/layout/components/SideBar/index.vue'
 import TagsView from '@/layout/components/TagsView/index.vue'
 import { DeviceType, useAppStore } from '@/stores/app-store'
-import { defineComponent } from 'vue'
+import { defineComponent, ref } from 'vue'
 import ResizeMixin from '@/layout/mixins/resize-mixin'
 import RightPanel from '@/components/RightPanel/index.vue'
 import Settings from '@/layout/components/Settings.vue'
@@ -162,9 +162,9 @@ export default defineComponent({
   computed: {
     classObj() {
       return {
-        hideSidebar: !this.sidebar.opened,
-        openSidebar: this.sidebar.opened,
-        withoutAnimation: this.sidebar.withoutAnimation,
+        hideSidebar: !this.sidebar.opened.value,
+        openSidebar: this.sidebar.opened.value,
+        withoutAnimation: this.sidebar.withoutAnimation.value,
         mobile: this.device === DeviceType.Mobile
       }
     },

@@ -7,22 +7,28 @@
       <sidebar-item-link v-if="theOnlyOneChild!.meta" :to="resolvePath(theOnlyOneChild!.path)">
         <el-menu-item
           :index="resolvePath(theOnlyOneChild!.path)"
-          :class="{ 'submenu-title-noDropdown': isFirstLevel }"
+          :class="{
+            'submenu-title-noDropdown': isFirstLevel
+          }"
         >
           <icon
             v-if="theOnlyOneChild!.meta!.icon"
             :data="mapIcon(theOnlyOneChild!.meta!.icon as string)"
           />
-          <span v-if="theOnlyOneChild!.meta!.title">{{
-            $t('route.' + theOnlyOneChild!.meta!.title)
-          }}</span>
+          <template #title>
+            <span v-if="theOnlyOneChild!.meta!.title">
+              {{ $t('route.' + theOnlyOneChild!.meta!.title) }}</span
+            >
+          </template>
         </el-menu-item>
       </sidebar-item-link>
     </template>
     <el-sub-menu v-else :index="resolvePath(item.path)" teleported>
       <template #title>
         <icon v-if="item.meta && item.meta.icon" :data="mapIcon(item.meta.icon as string)" />
-        <span v-if="item.meta && item.meta.title">{{ $t('route.' + item.meta.title) }}</span>
+        <span v-if="item.meta && item.meta.title">
+          {{ $t('route.' + item.meta.title) }}
+        </span>
       </template>
       <template v-if="item.children">
         <sidebar-item
@@ -142,6 +148,10 @@ export default defineComponent({
   &.first-level {
     background-color: var(--el-menu-bg-color);
   }
+
+  .el-menu-item .is-collapsed .is-first-level {
+    display: none;
+  }
   // .nest-menu .el-submenu > .el-submenu__title,
   .nest-menu .el-menu-item,
   .full-mode.nest-menu .el-sub-menu .el-sub-menu__title,
@@ -165,18 +175,30 @@ export default defineComponent({
       padding: 0 !important;
       position: relative;
 
-      .el-tooltip {
+      span {
+        display: none;
+      }
+
+      .el-tooltip__trigger {
         padding: 0 !important;
+
+        & > svg {
+          flex: 0 0 auto;
+        }
       }
     }
 
-    .el-submenu {
+    .el-sub-menu {
       overflow: hidden;
 
-      & > .el-submenu__title {
+      & > .el-sub-menu__title {
         padding: 0px !important;
+        font-size: 0;
+        &:hover {
+          background-color: var(--el-menu-hover-bg-color) !important;
+        }
 
-        .el-submenu__icon-arrow {
+        .el-sub-menu__icon-arrow {
           display: none;
         }
 
