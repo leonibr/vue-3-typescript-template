@@ -139,6 +139,9 @@ export default defineComponent({
 //}
 
 .full-mode {
+  &.first-level {
+    background-color: var(--el-menu-bg-color);
+  }
   // .nest-menu .el-submenu > .el-submenu__title,
   .nest-menu .el-menu-item,
   .full-mode.nest-menu .el-sub-menu .el-sub-menu__title,
