@@ -5,21 +5,21 @@
       style="line-height: 25px; margin-top: -5px"
       @click="dialogTableVisible = true"
     >
-      <el-button style="padding: 8px 10px" size="small" type="danger">
+      <el-button style="padding: 8px 10px" type="danger">
         <icon :data="bug" />
       </el-button>
     </el-badge>
 
-    <el-dialog v-model:visible="dialogTableVisible" width="80%" append-to-body>
-      <template v-slot:title>
+    <el-dialog v-model="dialogTableVisible" width="80%" append-to-body>
+      <template #header>
         <span style="padding-right: 10px">Error Log</span>
-        <el-button size="mini" type="primary" icon="el-icon-delete" @click="clearAll">
+        <el-button size="small" type="primary" icon="el-icon-delete" @click="clearAll">
           Clear All
         </el-button>
       </template>
       <el-table :data="errorLogs" border>
         <el-table-column label="Message">
-          <template v-slot="{ row }">
+          <template #default="{ row }">
             <div>
               <span class="message-title">Msg:</span>
               <el-tag type="danger">
@@ -28,8 +28,9 @@
             </div>
             <br />
             <div>
+              <!--.$vnode.tag -->
               <span class="message-title" style="padding-right: 10px">Info: </span>
-              <el-tag type="warning"> {{ row.vm.$vnode.tag }} error in {{ row.info }} </el-tag>
+              <el-tag type="warning"> {{ row?.vm?.$node?.tag }} error in {{ row.info }} </el-tag>
             </div>
             <br />
             <div>
@@ -41,8 +42,8 @@
           </template>
         </el-table-column>
         <el-table-column label="Stack">
-          <template v-slot="{ row }">
-            {{ row.err.stack }}
+          <template #default="{ row }">
+            <pre class="stack">{{ row.err.stack }}</pre>
           </template>
         </el-table-column>
       </el-table>
@@ -86,5 +87,10 @@ export default defineComponent({
   color: #333;
   font-weight: bold;
   padding-right: 8px;
+}
+.stack {
+  overflow: scroll;
+  font-size: 12px;
+  line-height: 1.5;
 }
 </style>

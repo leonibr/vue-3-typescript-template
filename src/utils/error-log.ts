@@ -5,7 +5,8 @@ import { useErrorLogStore } from '@/stores/error-log-store'
 const { errorLog: needErrorLog } = settings
 
 const checkNeed = () => {
-  const env = process.env.NODE_ENV
+  const env = import.meta.env.PROD ? 'production' : 'not-production' // process.env.NODE_ENV
+  console.log({ env })
   if (isArray(needErrorLog) && env) {
     return needErrorLog.includes(env)
   }
@@ -15,6 +16,7 @@ const checkNeed = () => {
 const globalErrorHandler = () => {
   if (checkNeed()) {
     return (err: any, vm: any, info: string) => {
+      console.error({ err, vm, info })
       const errorStore = useErrorLogStore()
       errorStore.AddErrorLog({
         err,

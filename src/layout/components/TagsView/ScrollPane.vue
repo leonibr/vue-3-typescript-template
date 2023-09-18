@@ -50,7 +50,7 @@ export default defineComponent({
       const containerWidth = container.offsetWidth
       const scrollWrapper = this.scrollWrapper
 
-      const tagList = this.$parent?.$refs.tag as unknown as HTMLElement[]
+      const tagList = (this.$parent?.$refs.tag as unknown as HTMLElement[]) ?? []
 
       let firstTag = null
       let lastTag = null
