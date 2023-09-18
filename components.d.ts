@@ -11,6 +11,7 @@ declare module 'vue' {
     BackToTop: typeof import('./src/components/BackToTop/index.vue')['default']
     BarChart: typeof import('./src/components/Charts/BarChart.vue')['default']
     BreadCrumb: typeof import('./src/components/BreadCrumb/index.vue')['default']
+    DraggableKanban: typeof import('./src/components/DraggableKanban/index.vue')['default']
     EditorImage: typeof import('./src/components/Tinymce/components/EditorImage.vue')['default']
     ElAlert: typeof import('element-plus/es')['ElAlert']
     ElBadge: typeof import('element-plus/es')['ElBadge']
