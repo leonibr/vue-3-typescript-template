@@ -10,8 +10,6 @@
       :duration="duration"
       :decimalPlaces="decimals"
       :separator="separator"
-      :prefix="prefix"
-      :suffix="suffix"
       :autoplay="false"
       class="count"
     >
