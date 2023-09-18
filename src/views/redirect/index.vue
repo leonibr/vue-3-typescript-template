@@ -1,3 +1,7 @@
+<template>
+  <div>loading...</div>
+</template>
+
 <script lang="ts">
 import { defineComponent } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
@@ -12,9 +16,6 @@ export default defineComponent({
 
     const router = useRouter()
     router.replace({ path: '/' + path, query }).catch((err) => console.warn({ redirect: err }))
-  },
-  render() {
-    return null
   }
 })
 </script>
