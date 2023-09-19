@@ -11,33 +11,21 @@
       highlight-current-row
       style="width: 100%"
     >
-      <el-table-column align="center" label="ID" width="65">
-        <template #default="{ row }">
-          <span>{{ row.id }}</span>
-        </template>
+      <el-table-column align="center" label="Drag" width="80">
+        <icon class="draggable-handler" :data="svg.Drag" width="20" height="20" />
       </el-table-column>
+      <el-table-column align="center" label="ID" width="65" prop="id" />
 
       <el-table-column width="180px" align="center" label="Date">
         <template #default="{ row }">
           <span>{{ parseTime(row.timestamp) }}</span>
         </template>
       </el-table-column>
-
-      <el-table-column min-width="300px" label="Title">
-        <template #default="{ row }">
-          <span>{{ row.title }}</span>
-        </template>
-      </el-table-column>
-
-      <el-table-column width="180px" align="center" label="Author">
-        <template #default="{ row }">
-          <span>{{ row.author }}</span>
-        </template>
-      </el-table-column>
-
+      <el-table-column min-width="300px" label="Title" prop="title" />
+      <el-table-column width="180px" align="center" label="Author" prop="author" />
       <el-table-column width="105px" label="Importance">
         <template #default="{ row }">
-          <svg-icon v-for="n in +row.importance" :key="n" name="star" class="icon-star" />
+          <icon v-for="n in +row.importance" :key="n" :data="svg.Star" class="icon-star" />
         </template>
       </el-table-column>
 
@@ -53,10 +41,6 @@
             {{ row.status }}
           </el-tag>
         </template>
-      </el-table-column>
-
-      <el-table-column align="center" label="Drag" width="80">
-        <icon class="draggable-handler" :data="svg.Drag" width="20" height="20" />
       </el-table-column>
     </el-table>
     <!-- $t is vue-i18n global function to translate lang (lang in @/lang)  -->
@@ -76,7 +60,8 @@ import { type IArticleData } from '@/api/types'
 import { defineComponent, ref, reactive } from 'vue'
 import { parseTime } from '@/utils'
 import { articleStatusFilter } from '@/utils/filters'
-import Drag from '@element-plus/icons-vue'
+import Drag from '@/icons/svg/drag.svg'
+import Star from '@/icons/svg/star.svg'
 
 export default defineComponent({
   name: 'DraggableTable',
@@ -90,6 +75,7 @@ export default defineComponent({
       page: 1,
       limit: 10
     })
+    const draggableTable = ref()
 
     const sortable = reactive<Sortable | null>(null)
     return {
@@ -102,8 +88,10 @@ export default defineComponent({
       listQuery,
       parseTime,
       articleStatusFilter,
+      draggableTable,
       svg: {
-        Drag
+        Drag,
+        Star
       }
     }
   },
@@ -129,7 +117,7 @@ export default defineComponent({
 
     setSort() {
       const el = (this.$refs.draggableTable as any).$el.querySelectorAll(
-        '.el-table__body-wrapper > table > tbody'
+        '.el-table__body-wrapper > .el-scrollbar > .el-scrollbar__wrap > .el-scrollbar__view > .el-table__body > tbody'
       )[0] as HTMLElement
       this.sortable = Sortable.create(el, {
         ghostClass: 'sortable-ghost', // Class name for the drop placeholder
@@ -159,6 +147,7 @@ export default defineComponent({
 <style lang="scss" scoped>
 .icon-star {
   margin-right: 2px;
+  color: #d7d72a;
 }
 
 .draggable-handler {
