@@ -4,7 +4,7 @@
       {{ $t('guide.description') }}
       <a href="https://github.com/kamranahmedse/driver.js" target="_blank">driver.js.</a>
     </aside>
-    <el-button icon="el-icon-question" type="primary" @click.prevent.stop="guide">
+    <el-button :icon="QuestionFilled" type="primary" @click.prevent.stop="guide">
       {{ $t('guide.button') }}
     </el-button>
   </div>
@@ -15,6 +15,7 @@ import { driver, type Driver } from 'driver.js'
 import 'driver.js/dist/driver.css'
 import { steps } from './steps'
 import { defineComponent, ref } from 'vue'
+import { QuestionFilled } from '@element-plus/icons-vue'
 
 export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
@@ -22,7 +23,8 @@ export default defineComponent({
   setup() {
     const driver = ref<Driver | null>(null)
     return {
-      driver
+      driver,
+      QuestionFilled
     }
   },
   mounted() {
