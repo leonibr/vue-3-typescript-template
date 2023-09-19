@@ -95,7 +95,7 @@ import { defineComponent, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { articleStatusFilter, uppercaseFirstChar } from '@/utils/filters'
 import { parseTime } from '@/utils'
-import { CircleCheck, Edit, StarFilled, Refresh, Star } from '@element-plus/icons-vue'
+import { CircleCheck, Edit, StarFilled, Refresh } from '@element-plus/icons-vue'
 
 export default defineComponent({
   name: 'InlineEditTable',

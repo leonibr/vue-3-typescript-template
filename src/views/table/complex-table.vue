@@ -6,7 +6,7 @@
         :placeholder="$t('table.title')"
         style="width: 200px"
         class="filter-item"
-        @keyup.enter.native="handleFilter"
+        @keyup.enter="handleFilter"
       />
       <el-select
         v-model="listQuery.importance"
@@ -44,20 +44,14 @@
           :value="item.key"
         />
       </el-select>
-      <el-button
-        v-waves
-        class="filter-item"
-        type="primary"
-        icon="el-icon-search"
-        @click="handleFilter"
-      >
+      <el-button v-waves class="filter-item" type="primary" :icon="Search" @click="handleFilter">
         {{ $t('table.search') }}
       </el-button>
       <el-button
         class="filter-item"
         style="margin-left: 10px"
         type="primary"
-        icon="el-icon-edit"
+        :icon="Edit"
         @click="handleCreate"
       >
         {{ $t('table.add') }}
@@ -67,7 +61,7 @@
         :loading="downloadLoading"
         class="filter-item"
         type="primary"
-        icon="el-icon-download"
+        :icon="Download"
         @click="handleDownload"
       >
         {{ $t('table.export') }}
@@ -100,23 +94,23 @@
         width="80"
         :class-name="getSortClass('id')"
       >
-        <template v-slot="{ row }">
+        <template #default="{ row }">
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.date')" width="180px" align="center">
-        <template v-slot="{ row }">
-          <span>{{ row.timestamp | parseTime }}</span>
+        <template #default="{ row }">
+          <span>{{ parseTime(row.timestamp) }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.title')" min-width="150px">
-        <template v-slot="{ row }">
+        <template #default="{ row }">
           <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
-          <el-tag>{{ row.type | typeFilter }}</el-tag>
+          <el-tag>{{ typeFilter(row.type) }}</el-tag>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.author')" width="180px" align="center">
-        <template v-slot="{ row }">
+        <template #default="{ row }">
           <span>{{ row.author }}</span>
         </template>
       </el-table-column>
@@ -126,17 +120,25 @@
         width="110px"
         align="center"
       >
-        <template v-slot="{ row }">
+        <template #default="{ row }">
           <span style="color: red">{{ row.reviewer }}</span>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.importance')" width="105px">
-        <template v-slot="{ row }">
-          <svg-icon v-for="n in +row.importance" :key="n" name="star" class="meta-item__icon" />
+        <template #default="{ row }">
+          <el-icon
+            size="20"
+            v-for="n in +row.importance"
+            :key="n"
+            style="color: rgb(215, 215, 42)"
+            class="meta-item__icon"
+          >
+            <star-filled />
+          </el-icon>
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.readings')" align="center" width="95">
-        <template v-slot="{ row }">
+        <template #default="{ row }">
           <span v-if="row.pageviews" class="link-type" @click="handleGetPageviews(row.pageviews)">{{
             row.pageviews
           }}</span>
@@ -144,8 +146,8 @@
         </template>
       </el-table-column>
       <el-table-column :label="$t('table.status')" class-name="status-col" width="100">
-        <template v-slot="{ row }">
-          <el-tag :type="row.status | articleStatusFilter">
+        <template #default="{ row }">
+          <el-tag :type="articleStatusFilter(row.status)">
             {{ row.status }}
           </el-tag>
         </template>
@@ -156,13 +158,13 @@
         width="230"
         class-name="fixed-width"
       >
-        <template v-slot="{ row, $index }">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
+        <template #default="{ row, $index }">
+          <el-button type="primary" size="small" @click="handleUpdate(row)">
             {{ $t('table.edit') }}
           </el-button>
           <el-button
             v-if="row.status !== 'published'"
-            size="mini"
+            size="small"
             type="success"
             @click="handleModifyStatus(row, 'published')"
           >
@@ -170,14 +172,14 @@
           </el-button>
           <el-button
             v-if="row.status !== 'draft'"
-            size="mini"
+            size="small"
             @click="handleModifyStatus(row, 'draft')"
           >
             {{ $t('table.draft') }}
           </el-button>
           <el-button
             v-if="row.status !== 'deleted'"
-            size="mini"
+            size="small"
             type="danger"
             @click="handleDelete(row, $index)"
           >
@@ -195,7 +197,7 @@
       @pagination="getList"
     />
 
-    <el-dialog :title="textMap[dialogStatus]" v-model:visible="dialogFormVisible">
+    <el-dialog :title="textMap[dialogStatus]" v-model="dialogFormVisible">
       <el-form
         ref="dataForm"
         :rules="rules"
@@ -250,14 +252,19 @@
           />
         </el-form-item>
       </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">
-          {{ $t('table.cancel') }}
-        </el-button>
-        <el-button type="primary" @click="dialogStatus === 'create' ? createData() : updateData()">
-          {{ $t('table.confirm') }}
-        </el-button>
-      </div>
+      <template #footer>
+        <div class="dialog-footer">
+          <el-button @click="dialogFormVisible = false">
+            {{ $t('table.cancel') }}
+          </el-button>
+          <el-button
+            type="primary"
+            @click="dialogStatus === 'create' ? createData() : updateData()"
+          >
+            {{ $t('table.confirm') }}
+          </el-button>
+        </div>
+      </template>
     </el-dialog>
 
     <el-dialog v-model:visible="dialogPageviewsVisible" title="Reading statistics">
@@ -265,11 +272,13 @@
         <el-table-column prop="key" label="Channel" />
         <el-table-column prop="pageviews" label="Pageviews" />
       </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPageviewsVisible = false">{{
-          $t('table.confirm')
-        }}</el-button>
-      </span>
+      <template #footer>
+        <span class="dialog-footer">
+          <el-button type="primary" @click="dialogPageviewsVisible = false">{{
+            $t('table.confirm')
+          }}</el-button>
+        </span>
+      </template>
     </el-dialog>
   </div>
 </template>
@@ -289,7 +298,10 @@ import { exportJson2Excel } from '@/utils/excel'
 import { formatJson } from '@/utils'
 import Pagination from '@/components/Pagination/index.vue'
 import { ElNotification } from 'element-plus'
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, reactive } from 'vue'
+import { articleStatusFilter } from '@/utils/filters'
+import { parseTime } from '@/utils'
+import { StarFilled, Edit, Download, Search } from '@element-plus/icons-vue'
 
 const calendarTypeOptionsSource = [
   { key: 'CN', displayName: 'China' },
@@ -307,15 +319,17 @@ const calendarTypeKeyValue = calendarTypeOptionsSource.reduce(
   {}
 ) as { [key: string]: string }
 
+const typeFilter = (type: string) => {
+  return calendarTypeKeyValue[type]
+}
+
 export default defineComponent({
   name: 'ComplexTable',
   components: {
-    Pagination
-  },
-  filters: {
-    typeFilter: (type: string) => {
-      return calendarTypeKeyValue[type]
-    }
+    Pagination,
+    StarFilled,
+    Download,
+    Search
   },
   setup() {
     const tableKey = ref(0)
@@ -357,8 +371,13 @@ export default defineComponent({
 
     const downloadLoading = ref(false)
     const tempArticleData = ref(defaultArticleData)
+    const dataForm = ref('')
 
     return {
+      Edit,
+      Search,
+      Download,
+      dataForm,
       tableKey,
       list,
       total,
@@ -376,7 +395,10 @@ export default defineComponent({
       importanceOptions,
       calendarTypeOptions,
       downloadLoading,
-      tempArticleData
+      tempArticleData,
+      articleStatusFilter,
+      parseTime,
+      typeFilter
     }
   },
   created() {
@@ -386,7 +408,7 @@ export default defineComponent({
     async getList() {
       this.listLoading = true
       const { data } = await getArticles(this.listQuery)
-      this.list = data.items
+      this.list = reactive(data.items)
       this.total = data.total
       // Just to simulate the time of the request
       setTimeout(() => {
@@ -437,6 +459,7 @@ export default defineComponent({
       this.dialogStatus = 'create'
       this.dialogFormVisible = true
       this.$nextTick(() => {
+        debugger
         ;(this.$refs.dataForm as typeof ElForm).clearValidate()
       })
     },
@@ -451,7 +474,7 @@ export default defineComponent({
           data.article.timestamp = Date.parse(data.article.timestamp)
           this.list.unshift(data.article)
           this.dialogFormVisible = false
-          this.$notify({
+          ElNotification({
             title: '成功',
             message: '创建成功',
             type: 'success',
