@@ -145,6 +145,7 @@ export default defineComponent({
 }
 
 .handle-button {
+  padding-top: 4px;
   width: 48px;
   height: 48px;
   position: absolute;
