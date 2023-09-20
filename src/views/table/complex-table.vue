@@ -405,9 +405,10 @@ export default defineComponent({
     this.getList()
   },
   methods: {
-    async getList() {
+    async getList(info?: { page: number; limit: number }) {
+      const query = info ?? this.listQuery
       this.listLoading = true
-      const { data } = await getArticles(this.listQuery)
+      const { data } = await getArticles(query)
       this.list = reactive(data.items)
       this.total = data.total
       // Just to simulate the time of the request
