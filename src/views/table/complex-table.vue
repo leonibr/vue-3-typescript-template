@@ -128,7 +128,7 @@
         <template #default="{ row }">
           <el-icon
             size="20"
-            v-for="n in +row.importance"
+            v-for="n in Array.from({ length: +row.importance }, (_, i) => i + 1)"
             :key="n"
             style="color: rgb(215, 215, 42)"
             class="meta-item__icon"
@@ -327,9 +327,7 @@ export default defineComponent({
   name: 'ComplexTable',
   components: {
     Pagination,
-    StarFilled,
-    Download,
-    Search
+    StarFilled
   },
   setup() {
     const tableKey = ref(0)

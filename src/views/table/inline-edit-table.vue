@@ -28,7 +28,7 @@
 
       <el-table-column width="105px" label="Importance">
         <template #default="{ row }">
-          <template v-for="n in +row.importance" :key="n">
+          <template v-for="n in Array.from({ length: +row.importance }, (_, i) => i + 1)" :key="n">
             <el-icon size="20" style="color: rgb(215, 215, 42)" class="meta-item__icon">
               <star-filled />
             </el-icon>

@@ -25,7 +25,12 @@
       <el-table-column width="180px" align="center" label="Author" prop="author" />
       <el-table-column width="105px" label="Importance">
         <template #default="{ row }">
-          <icon v-for="n in +row.importance" :key="n" :data="svg.Star" class="icon-star" />
+          <icon
+            v-for="n in Array.from({ length: +row.importance }, (_, i) => i + 1)"
+            :key="n"
+            :data="svg.Star"
+            class="icon-star"
+          />
         </template>
       </el-table-column>
 

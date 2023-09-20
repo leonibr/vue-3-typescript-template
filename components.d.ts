@@ -86,6 +86,7 @@ declare module 'vue' {
     Sticky: typeof import('./src/components/Sticky/index.vue')['default']
     ThemePicker: typeof import('./src/components/ThemePicker/index.vue')['default']
     Tinymce: typeof import('./src/components/Tinymce/index.vue')['default']
+    UploadImage: typeof import('./src/components/UploadImage/index.vue')['default']
   }
   export interface ComponentCustomProperties {
     vLoading: typeof import('element-plus/es')['ElLoadingDirective']
