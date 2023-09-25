@@ -101,7 +101,7 @@
 import { ElForm as Form, ElInput } from 'element-plus'
 import { isValidUsername } from '@/utils/validate'
 import LangSelect from '@/components/LangSelect/index.vue'
-// import SocialSign from './components/SocialSignin.vue'
+import SocialSign from './components/SocialSignin.vue'
 import { defineComponent, reactive, ref, watch } from 'vue'
 import { useRoute, type RouteLocationNormalizedLoaded } from 'vue-router'
 import { useUserStore } from '@/stores/user-store'
@@ -130,8 +130,8 @@ export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
   name: 'Login',
   components: {
-    LangSelect
-    // SocialSign
+    LangSelect,
+    SocialSign
   },
   setup() {
     const route = useRoute()
