@@ -77,7 +77,7 @@
 
 <script lang="ts">
 import { getArticles } from '@/api/articles'
-import { type IArticleData } from '@/api/types'
+import { type IArticleData } from '@/api/types.d'
 import Pagination from '@/components/Pagination/index.vue'
 import { articleStatusFilter } from '@/utils/filters'
 import { defineComponent, ref } from 'vue'

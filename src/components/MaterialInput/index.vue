@@ -273,7 +273,7 @@ $color-black: black;
 
   .material-input {
     font-size: $font-size-base;
-    padding: $spacer $spacer $spacer $spacer / 2;
+    padding: $spacer $spacer $spacer calc($spacer / 2);
     display: block;
     width: 100%;
     border: none;
@@ -346,8 +346,8 @@ $color-black: black;
       line-height: $font-size-smallest + 2px;
       overflow: hidden;
       margin-top: 0;
-      padding-top: $spacer / 2;
-      padding-right: $spacer / 2;
+      padding-top: calc($spacer / 2);
+      padding-right: calc($spacer / 2);
       padding-left: 0;
     }
   }

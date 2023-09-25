@@ -61,7 +61,7 @@
 <script lang="ts">
 import Sortable from 'sortablejs'
 import { getArticles } from '@/api/articles'
-import { type IArticleData } from '@/api/types'
+import { type IArticleData } from '@/api/types.d'
 import { defineComponent, ref, reactive } from 'vue'
 import { parseTime } from '@/utils'
 import { articleStatusFilter } from '@/utils/filters'

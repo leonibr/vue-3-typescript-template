@@ -63,7 +63,7 @@ import { articleStatusFilter } from '@/utils/filters'
 import { parseTime } from '@/utils'
 import { getArticles } from '@/api/articles'
 import { defineComponent, ref } from 'vue'
-import { type IArticleData } from '@/api/types'
+import { type IArticleData } from '@/api/types.d'
 import Star from '@/icons/svg/star.svg'
 
 export default defineComponent({

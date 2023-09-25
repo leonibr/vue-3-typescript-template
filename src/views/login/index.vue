@@ -105,12 +105,11 @@ import LangSelect from '@/components/LangSelect/index.vue'
 import { defineComponent, reactive, ref, watch } from 'vue'
 import { useRoute, type RouteLocationNormalizedLoaded } from 'vue-router'
 import { useUserStore } from '@/stores/user-store'
-import { Dictionary } from 'vue-router/types/router'
 import user from '@/icons/svg/user.svg'
 import password from '@/icons/svg/password.svg'
 import eyeOff from '@/icons/svg/eye-off.svg'
 import eyeOn from '@/icons/svg/eye-on.svg'
-
+type Dictionary<T> = { [key: string]: T }
 const validateUsername = (rule: any, value: string, callback: (vare?: any) => void) => {
   if (!isValidUsername(value)) {
     callback(new Error('Please enter the correct user name'))
@@ -206,7 +205,7 @@ export default defineComponent({
     },
 
     handleLogin() {
-      ;(this.$refs.loginFormHtml as typeof Form).validate(async(valid: boolean) => {
+      ;(this.$refs.loginFormHtml as typeof Form).validate(async (valid: boolean) => {
         if (valid) {
           this.loading = true
           await this.userStore.Login(this.loginForm)

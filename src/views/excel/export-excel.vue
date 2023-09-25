@@ -1,16 +1,27 @@
 <template>
   <div class="app-container">
-    <el-input
-      v-model="filename"
-      placeholder="Please enter the file name (default file)"
-      style="width: 300px"
-      :prefix-icon="Document"
-      auto-complete="off"
-    />
-    <el-button :loading="downloadLoading" type="primary" :icon="Document" @click="handleDownload">
-      Export Zip
-    </el-button>
-    <div style="margin-top: 20px"></div>
+    <div>
+      <filename-option v-model="filename" />
+      <auto-width-option v-model="autoWidth" />
+      <book-type-option v-model="bookType" />
+      <el-button
+        :loading="downloadLoading"
+        style="margin: 0 0 20px 20px"
+        type="primary"
+        :icon="Document"
+        @click="handleDownload"
+      >
+        {{ $t('excel.export') }} Excel
+      </el-button>
+      <a
+        href="https://armour.github.io/vue-typescript-admin-docs/features/components/excel.html"
+        target="_blank"
+        style="margin-left: 15px"
+      >
+        <el-tag type="info">Documentation</el-tag>
+      </a>
+    </div>
+
     <el-table
       v-loading="listLoading"
       :data="list"
@@ -19,7 +30,7 @@
       fit
       highlight-current-row
     >
-      <el-table-column align="center" label="ID" width="95">
+      <el-table-column width="95" align="center" label="Id">
         <template v-slot="{ $index }">
           {{ $index }}
         </template>
@@ -29,20 +40,20 @@
           {{ row.title }}
         </template>
       </el-table-column>
-      <el-table-column label="Author" align="center" width="180">
+      <el-table-column label="Author" width="180" align="center">
         <template v-slot="{ row }">
           <el-tag>{{ row.author }}</el-tag>
         </template>
       </el-table-column>
-      <el-table-column label="Readings" align="center" width="115">
+      <el-table-column width="115" align="center" label="Readings">
         <template v-slot="{ row }">
           {{ row.pageviews }}
         </template>
       </el-table-column>
-      <el-table-column label="Date" align="center" width="220">
+      <el-table-column width="220" align="center" label="Date">
         <template v-slot="{ row }">
           <i class="el-icon-time" />
-          <span>{{ row.timestamp }}</span>
+          <span>{{ parseTime(row.timestamp) }}</span>
         </template>
       </el-table-column>
     </el-table>
@@ -53,27 +64,41 @@
 import { getArticles } from '@/api/articles'
 import { type IArticleData } from '@/api/types.d'
 import { formatJson } from '@/utils'
-import { exportTxt2Zip } from '@/utils/zip'
-import { defineComponent, ref, reactive } from 'vue'
+import { exportJson2Excel } from '@/utils/excel'
+import FilenameOption from './components/FilenameOption.vue'
+import AutoWidthOption from './components/AutoWidthOption.vue'
+import BookTypeOption from './components/BookTypeOption.vue'
+import { ref, defineComponent } from 'vue'
+import { parseTime } from '@/utils'
 import { Document } from '@element-plus/icons-vue'
 
 export default defineComponent({
-  name: 'ExportZip',
-  created() {
-    this.fetchData()
+  name: 'ExportExcel',
+  components: {
+    AutoWidthOption,
+    BookTypeOption,
+    FilenameOption
   },
   setup() {
-    const list = reactive<IArticleData[]>([])
+    const list = ref<IArticleData[]>([])
     const listLoading = ref(true)
     const downloadLoading = ref(false)
     const filename = ref('')
+    const autoWidth = ref(true)
+    const bookType = ref('xlsx')
     return {
       list,
       listLoading,
       downloadLoading,
       filename,
+      autoWidth,
+      bookType,
+      parseTime,
       Document
     }
+  },
+  created() {
+    this.fetchData()
   },
   methods: {
     async fetchData() {
@@ -94,13 +119,26 @@ export default defineComponent({
       const filterVal = ['id', 'title', 'author', 'pageviews', 'timestamp']
       const list = this.list
       const data = formatJson(filterVal, list)
-      if (this.filename !== '') {
-        exportTxt2Zip(tHeader, data, this.filename, this.filename)
-      } else {
-        exportTxt2Zip(tHeader, data)
-      }
+      exportJson2Excel(
+        tHeader,
+        data,
+        this.filename !== '' ? this.filename : undefined,
+        undefined,
+        undefined,
+        this.autoWidth,
+        this.bookType
+      )
       this.downloadLoading = false
     }
   }
 })
 </script>
+
+<style lang="scss">
+.radio-label {
+  font-size: 14px;
+  color: #606266;
+  line-height: 40px;
+  padding: 0 12px 0 30px;
+}
+</style>

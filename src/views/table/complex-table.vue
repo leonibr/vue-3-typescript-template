@@ -293,7 +293,7 @@ import {
   updateArticle,
   defaultArticleData
 } from '@/api/articles'
-import { type IArticleData } from '@/api/types'
+import { type IArticleData } from '@/api/types.d'
 import { exportJson2Excel } from '@/utils/excel'
 import { formatJson } from '@/utils'
 import Pagination from '@/components/Pagination/index.vue'

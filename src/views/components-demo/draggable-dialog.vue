@@ -28,7 +28,7 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue'
-import { ElSelect } from 'element-plus/lib'
+import { ElSelect } from 'element-plus'
 
 export default defineComponent({
   name: 'DraggableDialogDemo',

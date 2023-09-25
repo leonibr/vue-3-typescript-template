@@ -16,7 +16,7 @@
 import { getArticles } from '@/api/articles'
 import DraggableList from '@/components/DraggableList/index.vue'
 import { defineComponent, ref } from 'vue'
-import { type IArticleData } from '@/api/types'
+import { type IArticleData } from '@/api/types.d'
 
 export default defineComponent({
   name: 'DraggableListDemo',

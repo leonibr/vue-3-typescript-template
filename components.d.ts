@@ -23,6 +23,8 @@ declare module 'vue' {
     ElBreadcrumbItem: typeof import('element-plus/es')['ElBreadcrumbItem']
     ElButton: typeof import('element-plus/es')['ElButton']
     ElCard: typeof import('element-plus/es')['ElCard']
+    ElCarousel: typeof import('element-plus/es')['ElCarousel']
+    ElCarouselItem: typeof import('element-plus/es')['ElCarouselItem']
     ElCheckbox: typeof import('element-plus/es')['ElCheckbox']
     ElCheckboxGroup: typeof import('element-plus/es')['ElCheckboxGroup']
     ElCol: typeof import('element-plus/es')['ElCol']
@@ -56,6 +58,8 @@ declare module 'vue' {
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
     ElTag: typeof import('element-plus/es')['ElTag']
+    ElTimeline: typeof import('element-plus/es')['ElTimeline']
+    ElTimelineItem: typeof import('element-plus/es')['ElTimelineItem']
     ElTooltip: typeof import('element-plus/es')['ElTooltip']
     ElTree: typeof import('element-plus/es')['ElTree']
     ElUpload: typeof import('element-plus/es')['ElUpload']
@@ -86,6 +90,7 @@ declare module 'vue' {
     Sticky: typeof import('./src/components/Sticky/index.vue')['default']
     ThemePicker: typeof import('./src/components/ThemePicker/index.vue')['default']
     Tinymce: typeof import('./src/components/Tinymce/index.vue')['default']
+    UploadExcel: typeof import('./src/components/UploadExcel/index.vue')['default']
     UploadImage: typeof import('./src/components/UploadImage/index.vue')['default']
   }
   export interface ComponentCustomProperties {

@@ -12,8 +12,8 @@
 
 <script lang="ts">
 import Sortable from 'sortablejs'
-import { defineComponent, ref, watch, reactive } from 'vue'
-import { ElSelect } from 'element-plus/lib'
+import { defineComponent, ref, reactive } from 'vue'
+import { ElSelect } from 'element-plus'
 
 export default defineComponent({
   name: 'DraggableSelect',

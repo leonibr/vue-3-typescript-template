@@ -20,7 +20,7 @@
 
 <script lang="ts">
 import { getTransactions } from '@/api/transactions'
-import { type ITransactionData } from '@/api/types'
+import { type ITransactionData } from '@/api/types.d'
 import { defineComponent, ref } from 'vue'
 
 export default defineComponent({

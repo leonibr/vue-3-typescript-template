@@ -90,7 +90,7 @@
 
 <script lang="ts">
 import { getArticles } from '@/api/articles'
-import { type IArticleData } from '@/api/types'
+import { type IArticleData } from '@/api/types.d'
 import { defineComponent, ref } from 'vue'
 import { ElMessage } from 'element-plus'
 import { articleStatusFilter, uppercaseFirstChar } from '@/utils/filters'
