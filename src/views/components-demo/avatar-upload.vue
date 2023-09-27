@@ -34,7 +34,7 @@
 import AvatarUpload from '@/components/AvatarUpload/index.vue'
 import PanThumb from '@/components/PanThumb/index.vue'
 import { defineComponent, ref, reactive } from 'vue'
-import Upload from '@element-plus/icons-vue'
+import { Upload } from '@element-plus/icons-vue'
 
 export default defineComponent({
   name: 'AvatarUploadDemo',
