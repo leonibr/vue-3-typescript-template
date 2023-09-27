@@ -9,7 +9,7 @@
     <pan-thumb :image="image" />
     <el-button
       type="primary"
-      icon="el-icon-upload"
+      :icon="Upload"
       tyle="position: absolute;bottom: 15px;margin-left: 40px;"
       @click="toggleShow"
     >
@@ -34,6 +34,7 @@
 import AvatarUpload from '@/components/AvatarUpload/index.vue'
 import PanThumb from '@/components/PanThumb/index.vue'
 import { defineComponent, ref, reactive } from 'vue'
+import Upload from '@element-plus/icons-vue'
 
 export default defineComponent({
   name: 'AvatarUploadDemo',
@@ -50,7 +51,8 @@ export default defineComponent({
       showImageUpload,
       image,
       params,
-      headers
+      headers,
+      Upload
     }
   },
   methods: {
