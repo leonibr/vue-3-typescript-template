@@ -19,8 +19,15 @@
     <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
   </a>
 </p>
+Sponsor by <img src="public/herodevs-hero.png" />
 
-## Overview
+## About us
+
+At HeroDevs we pride ourselves in being the experts that help you navigate end-of-life events in your technology stack. Companies offering enterprise support for open source libraries stop at the end of life. That’s where our value prop begins with our Never-Ending Support (NES) products. Our team has not only provided over 450 organizations with supported, secured versions of open source software beyond their end of life, but has also helped dozens of companies migrate their codebase to a modern, supported open source stack.
+
+With all NES Products we offer: continuous source code scanning for vulnerabilities, 5-minute installation without leaving your network, scanning for possible IP infringement in your code, and checks for platform, browser and 3rd-party library compatibility.
+
+Need to migrate? HeroDevs can help with that too. Hire our team of experts to help you navigate the challenges that come with migrating your code.
 
 #### Why?
 
