@@ -1,6 +1,6 @@
 <template>
   <a
-    href="https://github.com/armour/vue-typescript-admin-template"
+    href="https://github.com/leonibr/vue-3-typescript-template"
     target="_blank"
     class="github-corner"
     aria-label="View source on Github"

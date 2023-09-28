@@ -416,7 +416,7 @@ export const asyncRoutes: (RouteRecord | RouteRecordRaw)[] = [
     ]
   },
   {
-    path: '/redirect/https://github.com/Armour/vue-typescript-admin-template',
+    path: '/redirect/https://github.com/leonibr/vue-3-typescript-template',
     meta: {
       title: 'externalLink',
       icon: 'link'
