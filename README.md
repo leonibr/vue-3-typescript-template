@@ -19,19 +19,18 @@
     <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License: MIT">
   </a>
 </p>
-Sponsor by <img src="public/herodevs-hero.png" />
 
-## About us
+### What?
 
-At HeroDevs we pride ourselves in being the experts that help you navigate end-of-life events in your technology stack. Companies offering enterprise support for open source libraries stop at the end of life. That’s where our value prop begins with our Never-Ending Support (NES) products. Our team has not only provided over 450 organizations with supported, secured versions of open source software beyond their end of life, but has also helped dozens of companies migrate their codebase to a modern, supported open source stack.
+[vue-3-typescript-admin-template](https://vue-3-typescript-template.vercel.app/) is a production-ready template/starter kit for admin interface.
 
-With all NES Products we offer: continuous source code scanning for vulnerabilities, 5-minute installation without leaving your network, scanning for possible IP infringement in your code, and checks for platform, browser and 3rd-party library compatibility.
+This is the Vue 3 port of [vue 2 version of Armour](https://github.com/armour/vue-typescript-admin-template/).
 
-Need to migrate? HeroDevs can help with that too. Hire our team of experts to help you navigate the challenges that come with migrating your code.
+A
 
 #### Why?
 
-[vue-3-typescript-admin-template](https://vue-3-typescript-template.vercel.app/) is a production-ready template/starter kit for admin. This is the Vue 3 port of [vue 2 version of Armour](https://github.com/armour/vue-typescript-admin-template/)
+A starting point template using Vue 3 + Typescript + Vite
 
 ---
 
@@ -152,7 +151,7 @@ Understanding and learning these knowledge in advance will greatly help you on u
 │   └── index.html             # index.html template
 ├── src                        # main source code
 │   ├── api                    # api service
-│   ├── assets                 # module assets like fonts, images (processed by webpack)
+│   ├── assets                 # module assets like fonts, images
 │   ├── components             # global components
 │   ├── directives             # global directives
 │   ├── filters                # global filter
@@ -218,12 +217,6 @@ yarn run lint
 yarn run test:unit
 ```
 
-#### Generate all svg components
-
-```bash
-yarn run svg
-```
-
 #### Customize Vue configuration
 
 See [Configuration Reference](https://cli.vuejs.org/config/).
@@ -239,6 +232,16 @@ Modern browsers and Internet Explorer 10+.
 ## Contributing
 
 See [CONTRIBUTING.md](https://github.com/Armour/vue-typescript-admin-template/blob/master/.github/CONTRIBUTING.md)
+
+## Sponsor
+
+<img src="public/img/herodevs_logo.png" style="width:50%; padding:20px;max-width: 250px"/>
+
+At [HeroDevs](https://www.herodevs.com) we pride ourselves in being the experts that help you navigate end-of-life events in your technology stack. Companies offering enterprise support for open source libraries stop at the end of life. That's where our value prop begins with our Never-Ending Support (NES) products. Our team has not only provided over 450 organizations with supported, secured versions of open source software beyond their end of life, but has also helped dozens of companies migrate their codebase to a modern, supported open source stack.
+
+With all NES Products we offer: continuous source code scanning for vulnerabilities, 5-minute installation without leaving your network, scanning for possible IP infringement in your code, and checks for platform, browser and 3rd-party library compatibility.
+
+Need to migrate? HeroDevs can help with that too. Hire our team of experts to help you navigate the challenges that come with migrating your code.
 
 ## License
 
