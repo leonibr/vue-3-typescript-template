@@ -158,7 +158,7 @@ export default defineComponent({
     //       frontend need timestamp => 1372114765000
     watch(timestamp, (vl: string | number | Date) => (postForm.value.timestamp = +new Date(vl)))
     const loading = ref(false)
-    const userListOptions = ref([])
+    const userListOptions = ref<string[]>([])
 
     const tempTagView = ref<ITagView | null>(null)
     const tinymceActive = ref(true)
@@ -177,16 +177,15 @@ export default defineComponent({
       tagviewStore
     }
   },
-  mounted() {
-    const rules = ref({
-      imageURL: [{ validator: this.validateRequire }],
-      title: [{ validator: this.validateRequire }],
-      fullContent: [{ validator: this.validateRequire }],
-      sourceURL: [{ validator: this.validateSourceUrl, trigger: 'blur' }]
-    })
-    return { rules }
-  },
   computed: {
+    rules() {
+      return {
+        imageURL: [{ validator: this.validateRequire }],
+        title: [{ validator: this.validateRequire }],
+        fullContent: [{ validator: this.validateRequire }],
+        sourceURL: [{ validator: this.validateSourceUrl, trigger: 'blur' }]
+      }
+    },
     abstractContentLength() {
       return this.postForm.abstractContent.length
     },

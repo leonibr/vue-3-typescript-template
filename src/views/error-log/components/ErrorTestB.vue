@@ -10,6 +10,11 @@
 import { defineComponent } from 'vue'
 
 export default defineComponent({
-  name: 'ErrorTestB'
+  name: 'ErrorTestB',
+  setup() {
+    return {
+      b: undefined as any
+    }
+  }
 })
 </script>

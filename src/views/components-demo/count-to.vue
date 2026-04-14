@@ -10,12 +10,11 @@
       :duration="duration"
       :decimalPlaces="decimals"
       :separator="separator"
+      :prefix="prefix"
+      :suffix="suffix"
       :autoplay="false"
       class="count"
-    >
-      <template #prefix>{{ prefix }}</template>
-      <template #suffix>{{ suffix }}</template>
-    </count-up>
+    />
     <div style="margin-left: 25%; margin-top: 40px">
       <label class="label" for="startValInput">
         startVal:

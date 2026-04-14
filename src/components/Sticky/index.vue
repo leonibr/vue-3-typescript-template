@@ -1,15 +1,6 @@
 <template>
-  <div :style="{ height: height, zIndex: zIndex }">
-    <div
-      :class="className"
-      :style="{
-        top: isSticky ? stickyTop + 'px' : '',
-        zIndex: zIndex,
-        position: position,
-        width: width,
-        height: height
-      }"
-    >
+  <div :style="containerStyle">
+    <div :class="className" :style="stickyStyle">
       <slot>
         <div>sticky</div>
       </slot>
@@ -18,7 +9,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, type CSSProperties } from 'vue'
 
 export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
@@ -30,7 +21,7 @@ export default defineComponent({
   },
   setup() {
     const active = ref(false)
-    const position = ref('')
+    const position = ref<CSSProperties['position'] | undefined>(undefined)
     const isSticky = ref(false)
     const width = ref('auto')
     const height = ref('auto')
@@ -41,6 +32,23 @@ export default defineComponent({
       isSticky,
       width,
       height
+    }
+  },
+  computed: {
+    containerStyle(): CSSProperties {
+      return {
+        height: this.height,
+        zIndex: this.zIndex
+      }
+    },
+    stickyStyle(): CSSProperties {
+      return {
+        top: this.isSticky ? this.stickyTop + 'px' : undefined,
+        zIndex: this.zIndex,
+        position: this.position || undefined,
+        width: this.width,
+        height: this.height
+      }
     }
   },
   activated() {
@@ -70,7 +78,7 @@ export default defineComponent({
       if (!this.active) {
         return
       }
-      this.position = ''
+      this.position = undefined
       this.width = 'auto'
       this.active = false
       this.isSticky = false

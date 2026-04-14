@@ -213,7 +213,7 @@ export default defineComponent({
     color: #e6e6e6;
   }
 
-  .todoapp input::input-placeholder {
+  .todoapp input::placeholder {
     font-style: italic;
     font-weight: 300;
     color: #e6e6e6;

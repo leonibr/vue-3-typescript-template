@@ -82,7 +82,7 @@ export default defineComponent({
     })
     const draggableTable = ref()
 
-    const sortable = reactive<Sortable | null>(null)
+    const sortable = ref<Sortable | null>(null)
     return {
       sortable,
       list,

@@ -123,7 +123,7 @@ import { defineComponent, ref, watch } from 'vue'
 export default defineComponent({
   name: 'MaterialInput',
   props: {
-    modelValue: { type: Object, required: true },
+    modelValue: { type: [String, Number], required: true },
     type: { type: String, default: 'text' },
     id: { type: String, default: '' },
     icon: { type: String, default: '' },
@@ -133,8 +133,8 @@ export default defineComponent({
     disabled: { type: Boolean, default: false },
     required: { type: Boolean, default: true },
     autoComplete: { type: String, default: 'off' },
-    min: { type: [Number, Date], default: 0 },
-    max: { type: [Number, Date], default: 10000 },
+    min: { type: [Number, String], default: 0 },
+    max: { type: [Number, String], default: 10000 },
     step: { type: Number, default: 1 },
     minlength: { type: Number, default: 0 },
     maxlength: { type: Number, default: 20 },

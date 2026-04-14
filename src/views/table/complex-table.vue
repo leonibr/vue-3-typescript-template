@@ -353,11 +353,11 @@ export default defineComponent({
     const statusOptions = ref(['published', 'draft', 'deleted'])
     const showReviewer = ref(false)
     const dialogFormVisible = ref(false)
-    const dialogStatus = ref('')
-    const textMap = ref({
+    const dialogStatus = ref<'create' | 'update'>('create')
+    const textMap = {
       update: 'Edit',
       create: 'Create'
-    })
+    } as const
 
     const dialogPageviewsVisible = ref(false)
     const pageviewsData = ref([])
@@ -369,7 +369,7 @@ export default defineComponent({
 
     const downloadLoading = ref(false)
     const tempArticleData = ref(defaultArticleData)
-    const dataForm = ref('')
+    const dataForm = ref<InstanceType<typeof ElForm> | null>(null)
 
     return {
       Edit,
@@ -464,7 +464,7 @@ export default defineComponent({
     },
 
     createData() {
-      ;(this.$refs.dataForm as typeof ElForm).validate(async (valid) => {
+      ;(this.$refs.dataForm as typeof ElForm).validate(async (valid: boolean) => {
         if (valid) {
           const articleData = this.tempArticleData
           articleData.id = Math.round(Math.random() * 100) + 1024 // mock a id
@@ -494,7 +494,7 @@ export default defineComponent({
     },
 
     updateData() {
-      ;(this.$refs.dataForm as typeof ElForm).validate(async (valid: any) => {
+      ;(this.$refs.dataForm as typeof ElForm).validate(async (valid: boolean) => {
         if (valid) {
           const tempData = Object.assign({}, this.tempArticleData)
           tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464

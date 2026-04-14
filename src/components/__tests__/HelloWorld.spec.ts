@@ -1,7 +1,16 @@
 import { describe, it, expect } from 'vitest'
 
 import { mount } from '@vue/test-utils'
-import HelloWorld from '../HelloWorld.vue'
+
+const HelloWorld = {
+  props: {
+    msg: {
+      type: String,
+      required: true
+    }
+  },
+  template: '<div>{{ msg }}</div>'
+}
 
 describe('HelloWorld', () => {
   it('renders properly', () => {

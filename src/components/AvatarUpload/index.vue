@@ -19,9 +19,10 @@
 </template>
 
 <script lang="ts">
-import ImageCropUpload from 'vue-image-crop-upload'
-import { defineComponent, reactive, ref, watch } from 'vue'
+import { defineAsyncComponent, defineComponent, reactive, ref, watch } from 'vue'
 import { useAppStore } from '@/stores/app-store'
+
+const ImageCropUpload = defineAsyncComponent(() => import('vue-image-crop-upload'))
 
 export default defineComponent({
   name: 'AvatarUpload',
@@ -69,7 +70,7 @@ export default defineComponent({
       it: 'it'
     })
     const show = ref<boolean>(props.value)
-    const uploader = ref('')
+    const uploader = ref<{ setStep: (step: number) => void } | null>(null)
     const appStore = useAppStore()
     return {
       languageTypeList,
@@ -79,7 +80,7 @@ export default defineComponent({
     }
   },
   mounted() {
-    watch(ref(this.show), (value) => this.emit('input', value))
+    watch(() => this.show, (value) => this.$emit('input', value))
   },
   computed: {
     language() {
@@ -97,7 +98,7 @@ export default defineComponent({
 
     cropUploadSuccess(jsonData: any, field: string) {
       this.$emit('crop-upload-success', jsonData, field)
-      this.$nextTick(() => this.uploader.setStep(1))
+      this.$nextTick(() => this.uploader?.setStep(1))
     },
 
     cropUploadFail(status: boolean, field: string) {

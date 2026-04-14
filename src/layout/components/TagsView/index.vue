@@ -6,13 +6,13 @@
         ref="tag"
         :key="tag.path"
         :class="isActive(tag) ? 'active' : ''"
-        :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
+        :to="tag.fullPath || tag.path || ''"
         class="tags-view-item"
         @click.middle="!isAffix(tag) ? closeSelectedTag(tag) : ''"
         @contextmenu.prevent="openMenu(tag, $event)"
       >
         <span class="tag-title">
-          {{ $t('route.' + tag.meta!.title) }}
+          {{ $t('route.' + tag.meta?.title) }}
         </span>
 
         <el-icon

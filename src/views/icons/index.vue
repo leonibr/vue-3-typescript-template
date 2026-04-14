@@ -11,17 +11,17 @@
       <el-tab-pane label="Icons">
         <div class="grid">
           <div
-            v-for="item of Object.keys(svgs)"
+            v-for="item of Object.keys(iconComponents)"
             :key="item"
-            @click="handleClipboard(generateSvgIconCode(svgs[item]), $event)"
+            @click="handleClipboard(generateSvgIconCode(iconComponents[item]), $event)"
           >
             <el-tooltip placement="top">
               <template #content>
-                {{ generateSvgIconCode(svgs[item]) }}
+                {{ generateSvgIconCode(iconComponents[item]) }}
               </template>
               <div class="icon-item">
-                <component :is="svgs[item]" class="svg-item disabled" />
-                <span class="icon-name">{{ getName(svgs[item]) }}</span>
+                <component :is="iconComponents[item]" class="svg-item disabled" />
+                <span class="icon-name">{{ getName(iconComponents[item]) }}</span>
               </div>
             </el-tooltip>
           </div>
@@ -70,7 +70,7 @@ export default defineComponent({
       svgIcons,
       elementIcons,
       handleClipboard,
-      svgs
+      iconComponents: svgs as Record<string, any>
     }
   },
   methods: {

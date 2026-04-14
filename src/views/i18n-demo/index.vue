@@ -148,7 +148,8 @@ export default defineComponent({
   },
   created() {
     const viewName = 'i18nView'
-    if (!i18n.global.getLocaleMessage('en')[viewName]) {
+    const localeMessages = i18n.global.getLocaleMessage('en') as Record<string, unknown>
+    if (!localeMessages[viewName]) {
       i18n.global.mergeLocaleMessage('en', local.en)
       i18n.global.mergeLocaleMessage('zh', local.zh)
       i18n.global.mergeLocaleMessage('es', local.es)

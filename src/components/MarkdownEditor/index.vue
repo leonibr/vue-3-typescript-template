@@ -3,18 +3,58 @@
 </template>
 
 <script lang="ts">
-import 'codemirror/lib/codemirror.css' // Editor's Dependency Style
-import '@toast-ui/editor/dist/toastui-editor.css' // Editor's Style
-import '@toast-ui/editor/dist/i18n/es-es'
-import '@toast-ui/editor/dist/i18n/it-it'
-import '@toast-ui/editor/dist/i18n/ja-jp'
-import '@toast-ui/editor/dist/i18n/ko-kr'
-import '@toast-ui/editor/dist/i18n/zh-cn'
-import Editor, { EditorOptions } from '@toast-ui/editor'
+import type { EditorOptions } from '@toast-ui/editor'
 import defaultOptions from './default-options'
-import { defineComponent, type PropType, reactive, watch } from 'vue'
+import { defineComponent, type PropType, reactive, ref, watch } from 'vue'
+
+type EditorModule = typeof import('@toast-ui/editor')
+type EditorConstructor = EditorModule['default']
+type EditorInstance = InstanceType<EditorConstructor>
 
 const defaultId = () => 'markdown-editor-' + +new Date() + ((Math.random() * 1000).toFixed(0) + '')
+
+const languageLoaders: Record<string, (() => Promise<unknown>) | undefined> = {
+  es: () => import('@toast-ui/editor/dist/i18n/es-es'),
+  it: () => import('@toast-ui/editor/dist/i18n/it-it'),
+  ja: () => import('@toast-ui/editor/dist/i18n/ja-jp'),
+  ko: () => import('@toast-ui/editor/dist/i18n/ko-kr'),
+  zh: () => import('@toast-ui/editor/dist/i18n/zh-cn')
+}
+
+let editorStylesPromise: Promise<void> | null = null
+let editorPromise: Promise<EditorConstructor> | null = null
+
+function loadEditorStyles() {
+  if (!editorStylesPromise) {
+    editorStylesPromise = Promise.all([
+      import('codemirror/lib/codemirror.css'),
+      import('@toast-ui/editor/dist/toastui-editor.css')
+    ]).then(() => undefined)
+  }
+
+  return editorStylesPromise
+}
+
+function loadEditorRuntime() {
+  if (!editorPromise) {
+    editorPromise = import('@toast-ui/editor').then((module) => module.default)
+  }
+
+  return editorPromise
+}
+
+async function loadEditor(language: string) {
+  const runtimePromise = loadEditorRuntime()
+  const languageLoader = languageLoaders[language]
+
+  await Promise.all([
+    loadEditorStyles(),
+    runtimePromise,
+    languageLoader ? languageLoader() : Promise.resolve()
+  ])
+
+  return runtimePromise
+}
 
 export default defineComponent({
   name: 'MarkdownEditor',
@@ -45,7 +85,7 @@ export default defineComponent({
     }
   },
   setup() {
-    const markdownEditor: Editor = reactive({})
+    const markdownEditor = ref<EditorInstance | null>(null)
     // Mapping for local lang to tuiEditor lang
     // https://github.com/nhn/tui.editor/blob/master/apps/editor/docs/i18n.md#supported-languages
     const languageTypeList = reactive<{ [key: string]: string }>({
@@ -88,7 +128,7 @@ export default defineComponent({
     destroyEditor() {
       if (!this.markdownEditor) return
       this.markdownEditor.destroy()
-      this.markdownEditor = undefined
+      this.markdownEditor = null
     },
     onLanguageChange() {
       this.destroyEditor()
@@ -99,10 +139,11 @@ export default defineComponent({
         this.markdownEditor.height(value)
       }
     },
-    initEditor() {
+    async initEditor() {
       const editorElement = document.getElementById(this.id)
       if (!editorElement) return
-      // eslint-disable-next-line new-cap
+      const Editor = await loadEditor(this.language)
+      if (!document.body.contains(editorElement)) return
       this.markdownEditor = new Editor({
         ...this.editorOptions,
         el: editorElement
